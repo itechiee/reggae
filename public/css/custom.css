@@ -1,0 +1,117 @@
+.banner_book_now a{
+background-color: #06fba4;
+padding: 10px;
+text-decoration: none;
+font-size: 14px;
+}
+.banner_subtitle{
+width: 75%;
+margin: 0 auto;
+}
+.iconreception:before {
+    content: ""!important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale
+}
+.cafe_lg{
+min-height: 300px;
+display: inline-block;
+}
+#opening_hours{
+background-color: #232222;
+color: #fff;
+padding: 10px;
+margin-bottom: 15px;
+}
+#opening_hours h3{
+color: #fff;
+}
+
+.reggae-video, .rooftop-reggae-video {
+    width: 100%;
+}
+.reggae-wrapper{
+    display:table;
+    width:auto;
+    position:relative;
+    /* width: 680px; */
+    min-width:50%;
+}
+.reggae-playButton{
+    border-radius: 90px;
+    border: 12px solid #fff;
+    height: 100px;
+    position: absolute;
+    width: 100px;
+    margin: auto;
+    top:0;
+    bottom:0;
+    right:0;
+    left:0;
+    cursor: pointer;
+}
+.reggae-playButton:before{
+    content: "";
+    display: block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 25px 0 25px 50px;
+    border-color: transparent transparent transparent #fff;
+    position: absolute;
+    top:0;
+    left:0;
+    right:-10px;
+    bottom:0;
+    margin: auto;
+}
+
+.rooftop-reggae-wrapper{
+    position:relative;
+}
+
+.rooftop-reggae-playButton{
+    border-radius: 90px;
+    border: 12px solid #fff;
+    height: 100px;
+    position: absolute;
+    width: 100px;
+    margin: auto;
+    top:0;
+    bottom:0;
+    right:0;
+    left:0;
+    cursor: pointer;
+}
+.rooftop-reggae-playButton:before{
+    content: "";
+    display: block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 25px 0 25px 50px;
+    border-color: transparent transparent transparent #fff;
+    position: absolute;
+    top:0;
+    left:0;
+    right:-10px;
+    bottom:0;
+    margin: auto;
+}
+#gallery__caption-text{color:#fff;}
+.responsive-menu{
+    display: none;
+    background-color: #000;
+}
+.responsive-menu ul li a{
+    color: #fff;
+    padding: 1rem;
+    text-transform: uppercase;
+    line-height: 3;
+    font-weight: bold;
+}
+
+.expand {
+    display: block !important; 
+}
+#askus{padding:0;}

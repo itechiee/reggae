@@ -6,6 +6,15 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use DB;
+use Validator;
+use Input;
+use Auth;
+use Redirect;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Hash;
+use App\Facilities;
+use App\Rooms;
 
 class AdminController extends Controller
 {
@@ -16,8 +25,110 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $data['page_heading'] = 'Form';
+        $data['page_heading'] = '';
+        $data['facilitiesListCount'] = facilities::count();
+        $data['facilitiesRoomCount'] = rooms::count();
+        
         return view('admin.dashboard', $data);
+       
+    }
+
+    /**
+     * Create Facilities
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function createFacilities()
+    {
+      
+        $data['page_heading'] = 'Facilities';
+        $data['facilitiesList'] = facilities::all();
+
+        return view('admin.facilities', $data);
+    }
+
+    /**
+     * Store Facilities
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function storeFacilities(Request $request)
+    {
+        $data['page_heading'] = 'Facilities';
+        $input = $request->all();
+
+        $validator = Validator::make($request->all(), [
+            'facility_name' => 'required|max:100',
+            'align_section' => 'required',
+        ]);
+
+
+
+        if ($validator->fails()) {
+            return redirect('admin/facilities')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+        $data['facilitiesList'] = facilities::all();
+
+        $facilities = new facilities();
+        $facilities->Description = $input['facility_name'];
+        $facilities->Section = $input['align_section'];
+
+        if($facilities->save()){
+            return view('admin.facilities', $data)->withErrors('sucess');
+        }
+
+        
+    }
+    /**
+     * Create Rooms
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function createRooms()
+    {
+      
+        $data['page_heading'] = 'Rooms';
+        $data['roomsLists'] = rooms::all();
+
+        return view('admin.rooms', $data);
+    }
+
+    /**
+     * Store store rooms
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function storeRooms(Request $request)
+    {
+        $data['page_heading'] = 'Rooms';
+        $input = $request->all();
+
+        $validator = Validator::make($request->all(), [
+            'room_name' => 'required|max:50',
+            'room_price' => 'required|numeric',
+            'room_description' => 'required',
+        ]);
+
+
+        if ($validator->fails()) {
+            return redirect('admin/rooms')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+        $data['roomsLists'] = rooms::all();
+
+        $rooms = new rooms();
+        $rooms->room_name = $input['room_name'];
+        $rooms->price = $input['room_price'];
+        $rooms->room_description = $input['room_description'];
+
+        if($rooms->save()){
+            $request->session()->flash('alert-success', 'Room was successful added!');
+            return view('admin.rooms', $data);
+        }
+        
     }
 
     /**

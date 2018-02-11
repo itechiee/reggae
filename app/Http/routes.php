@@ -18,4 +18,13 @@ Route::get('auth/logout', 'Auth\AuthController@getLogout');
 
 Route::get('admin/dashboard', 'AdminController@index');
 
+Route::get('admin/facilities', 'AdminController@createFacilities');
+Route::post('admin/facilities/store', 'AdminController@storeFacilities');
+
+Route::get('admin/rooms', 'AdminController@createRooms');
+Route::post('admin/rooms/store', 'AdminController@storeRooms');
+
+Route::get('admin/rooftop', 'AdminController@createRooftop');
+Route::post('admin/Rooftop/store', 'AdminController@storeRooftop');
+
 Route::get('/', 'HomeController@index');

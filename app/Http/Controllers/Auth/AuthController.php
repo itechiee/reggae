@@ -3,10 +3,21 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use DB;
 use Validator;
+use Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use IlluminateSupportFacadesValidator;
+use IlluminateFoundationBusDispatchesJobs;
+use IlluminateRoutingController as BaseController;
+use IlluminateFoundationValidationValidatesRequests;
+use IlluminateFoundationAuthAccessAuthorizesRequests;
+use IlluminateFoundationAuthAccessAuthorizesResources;
+use IlluminateHtmlHtmlServiceProvider;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class AuthController extends Controller
 {

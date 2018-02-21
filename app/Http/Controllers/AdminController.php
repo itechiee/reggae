@@ -43,10 +43,8 @@ class AdminController extends Controller
      */
     public function createFacilities()
     {
-      
         $data['page_heading'] = 'Facilities';
         $data['facilitiesList'] = facilities::all();
-
         return view('admin.facilities', $data);
     }
 
@@ -59,30 +57,24 @@ class AdminController extends Controller
     {
         $data['page_heading'] = 'Facilities';
         $input = $request->all();
-
         $validator = Validator::make($request->all(), [
             'facility_name' => 'required|max:100',
             'align_section' => 'required',
         ]);
-
-
-
         if ($validator->fails()) {
             return redirect('admin/facilities')
                         ->withErrors($validator)
                         ->withInput();
         }
-        
 
         $facilities = new facilities();
         $facilities->Description = $input['facility_name'];
         $facilities->Section = $input['align_section'];
 
         if($facilities->save()){
-            return view('admin.facilities', $data)->withErrors('sucess');
+            $request->session()->flash('alert-success', 'Facility added successfully!');
+            return redirect('admin/facilities');
         }
-
-        
     }
     /**
      * Create Rooms

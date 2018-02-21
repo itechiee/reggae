@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Facilities;
 
 class HomeController extends Controller
 {
@@ -16,7 +17,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home.index');
+        $data['facilities']['left'] = Facilities::where('Section', 'Left')->get();
+        $data['facilities']['right'] = Facilities::where('Section', 'Right')->get();
+        return view('home.index', $data);
     }
 
     /**

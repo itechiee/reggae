@@ -402,48 +402,7 @@
                            </div>
                            <div class="columns">
                               <section class="accordion-group"  id="facilities" >
-                                 <ul class="accordion accordion--row" data-accordion data-allow-all-closed="true">
-                                    <li class="accordion-item" data-accordion-item>
-                                       <a href="#" class="accordion-title medium-disabled">
-                                          <h2 class="expando-line">
-                                             FACILITIES
-                                          </h2>
-                                       </a>
-                                       <div class="accordion-content" data-tab-content>
-                                          <div class="row collapse">
-                                             <div class="medium-4 large-6 columns end">
-                                                <div class="callout default">
-                                                   <h3>ALL HOSTEL FEATURE</h3>
-                                                   <ul class="menu vertical uppercase iconlist">
-                                                      <li> Free Wi-Fi </li>
-                                                      <li> 24-Hour Reception</li>
-                                                      <li> Internet Area</li>
-                                                      <li> Female Only Dorm</li>
-                                                      <li>Security Lockers</li>
-                                                      <li>Cafe</li>
-                                                      <li>Rooftop Bar</li>
-                                                      <li>Chill-Out Areas</li>
-                                                      <li>Cinema</li>
-                                                   </ul>
-                                                </div>
-                                             </div>
-                                             <div class="medium-4 large-6 columns end">
-                                                <div class="callout default">
-                                                   <!-- <h3>FACILITIES AT Reggae Stockholm</h3> -->
-                                                   <ul class="menu vertical uppercase iconlist">
-                                                      <li> Bike Hire</li>
-                                                      <li> Luggage storage</li>
-                                                      <li>Event space</li>
-                                                      <li> Laundry Service</li>
-                                                      <li>Parking Space</li>
-                                                      <li>Water Dispenser</li>
-                                                   </ul>
-                                                </div>
-                                             </div>
-                                          </div>
-                                       </div>
-                                    </li>
-                                 </ul>
+                                    @include('includes.facility.facility')                                 
                               </section>
                            </div>
                         </div>

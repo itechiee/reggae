@@ -8,7 +8,7 @@
                     <h1 class="page-header">{{ $page_heading }}</h1>
                 </div>
                 <div class="col-lg-6">
-                       <a href="{{ url('/admin/rooms/view_room_detail') }}" class="page-header pull-right"> <button type="View" class="btn btn-default">View</button></a>
+                       <a href="{{ url('/admin/contents/view_contents_details') }}" class="page-header pull-right"> <button type="View" class="btn btn-default">View</button></a>
                 </div>
                 <!-- /.col-lg-12 -->
            </div>

@@ -31,7 +31,9 @@ class AdminController extends Controller
     {
         $data['page_heading'] = '';
         $data['facilitiesListCount'] = facilities::count();
-        $data['facilitiesRoomCount'] = rooms::count();
+        $data['roomCount'] = rooms::count();
+        $data['roofTopCount'] = images::count();
+        $data['contentsCount'] = contents::count();
         
         return view('admin.dashboard', $data);
        
@@ -172,7 +174,16 @@ class AdminController extends Controller
         
     }
 
-
+     /**
+     * View contents- Fetch room details from DB
+     *
+     * @return array
+     */
+    public function viewContents()
+    {
+        $data['contents'] = contents::all();
+        return view('admin.view_contents', $data);
+    }
 
     /**
      * View rooms- Fetch room details from DB

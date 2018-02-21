@@ -26,7 +26,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="{{ url ('admin/facilities') }}">
+                        <a href="{{ url ('admin/facilities/view_facility_details') }}">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -43,12 +43,12 @@
                                     <i class="fa fa-tasks fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">{{ $facilitiesRoomCount }}</div>
+                                    <div class="huge">{{ $roomCount }}</div>
                                     <div>ROOMS!</div>
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <a href="{{ url ('admin/rooms/view_room_details') }}">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -66,12 +66,12 @@
                                     <i class="fa fa-shopping-cart fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">124</div>
+                                    <div class="huge">{{ $roofTopCount }}</div>
                                     <div>ROOF TOP!</div>
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <a href="{{ url ('admin/rooftop/view_rooftop_details') }}">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -88,12 +88,12 @@
                                     <i class="fa fa-support fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">13</div>
-                                    <div>CAFE!</div>
+                                    <div class="huge">{{ $contentsCount }}</div>
+                                    <div>CONTENTS!</div>
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <a href="{{ url ('admin/contents/view_contents_details') }}">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>

@@ -7,7 +7,7 @@
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-sm-12">
-                    <h3>Gallery</h3>
+                    <h3>Roof Top</h3>
                     <table id="roof_top" class="table table-bordered">
                         <thead>
                             <tr>

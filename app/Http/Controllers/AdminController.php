@@ -151,7 +151,7 @@ class AdminController extends Controller
     public function viewFacilities()
     {
         $data['facilitiesList'] = facilities::all();
-        return view('admin.view_facility', $data);
+        return view('admin.view_facility_details', $data);
     }
 
     /**

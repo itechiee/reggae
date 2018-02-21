@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Response;
 use App\Http\Controllers\Controller;
 use DB;
 use Validator;
@@ -15,6 +16,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Hash;
 use App\Facilities;
 use App\Rooms;
+use Image;
+use App\Images;
 
 class AdminController extends Controller
 {
@@ -69,7 +72,7 @@ class AdminController extends Controller
                         ->withErrors($validator)
                         ->withInput();
         }
-        $data['facilitiesList'] = facilities::all();
+        
 
         $facilities = new facilities();
         $facilities->Description = $input['facility_name'];
@@ -117,7 +120,6 @@ class AdminController extends Controller
                         ->withErrors($validator)
                         ->withInput();
         }
-        $data['roomsLists'] = rooms::all();
 
         $rooms = new rooms();
         $rooms->room_name = $input['room_name'];
@@ -132,14 +134,91 @@ class AdminController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * View rooms- Fetch room details from DB
+     *
+     * @return array
+     */
+    public function viewRooms()
+    {
+        $data['roomsLists'] = rooms::all();
+        return view('admin.view_rooms', $data);
+    }
+     /**
+     * View Facilities- Fetch room details from DB
+     *
+     * @return array
+     */
+    public function viewFacilities()
+    {
+        $data['facilitiesList'] = facilities::all();
+        return view('admin.view_facility', $data);
+    }
+
+    /**
+     * Create Gallery
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function createRooftop()
     {
-        //
+      
+        $data['page_heading'] = 'Rooms';
+        $data['roomsLists'] = rooms::all();
+
+        return view('admin.rooftop_gallery', $data);
     }
+
+    /**
+     * Store Gallery
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function storeRooftop(Request $request)
+    {
+        $data['page_heading'] = 'Roof Top';
+        $input = $request->all();
+
+        $validator = Validator::make($request->all(), [
+            'rooftop_type' => 'required',
+            'file' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('admin/rooftop')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        $fileName = null;
+        if (request()->hasFile('file')) {
+            $file = request()->file('file');
+            $file_type = $file->getClientOriginalExtension();
+            $fileName = md5($file->getClientOriginalName() . time()) . "." . $file->getClientOriginalExtension();
+            $file->move('../storage/app/uploads/', $fileName);    
+        }
+
+         $picture = new images();
+         $picture->type =  $input['rooftop_type'];
+         $picture->file_name = $fileName;
+         $picture->file_type = $file_type;
+
+        if($picture->save()){
+            $request->session()->flash('alert-success', 'Gallery was successful added!');
+            return view('admin.rooftop_gallery', $data);
+        }
+        
+    }
+     /**
+     * View Roof Top- Fetch gallery from DB
+     *
+     * @return array
+     */
+    public function viewRooftop()
+    {
+        $data['rooftopList'] = images::all();
+        return view('admin.view_rooftop', $data);
+    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -169,9 +248,24 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function editRooftop($id)
     {
         //
+    }
+    /**
+     * Delete Roof top
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteRooftop($id)
+    {dd($id);
+        if(isset($id)){
+            $deleteId = images::delete();
+            if($deleteId ){
+                return response()->json(['msg' => '1']);
+            }
+        }
     }
 
     /**

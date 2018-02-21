@@ -56,11 +56,24 @@
                         <li {{ (Request::is('*rooms') ? 'class="active"' : '') }}>
                             <a href="{{ url ('admin/rooms') }}"><i class="fa fa-table fa-fw"></i> Rooms</a>
                         </li>
-                        <li {{ (Request::is('*forms') ? 'class="active"' : '') }}>
-                            <a href="{{ url ('forms') }}"><i class="fa fa-edit fa-fw"></i> Roof Top</a>
+                        <li {{ (Request::is('*rooftop') ? 'class="active"' : '') }}>
+                            <a href="{{ url ('admin/rooftop') }}"><i class="fa fa-edit fa-fw"></i> Roof Top</a>
                         </li>
-                         <li {{ (Request::is('*forms') ? 'class="active"' : '') }}>
-                            <a href="{{ url ('forms') }}"><i class="fa fa-edit fa-fw"></i> Cafe</a>
+                        <li >
+                            <a href="#"><i class="fa fa-wrench fa-fw"></i> Content<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li {{ (Request::is('*Cafe') ? 'class="active"' : '') }}>
+                                    <a href="{{ url ('about_us') }}">About Us</a>
+                                </li>
+                                <li {{ (Request::is('*cafe') ? 'class="active"' : '') }}>
+                                    <a href="{{ url ('cafe' ) }}">Cafe</a>
+                                </li>
+                                <li {{ (Request::is('*contact_us') ? 'class="active"' : '') }}>
+                                    <a href="{{ url ('contact_us' ) }}">Contact Us</a>
+                                </li>
+                                
+                            </ul>
+                            <!-- /.nav-second-level -->
                         </li>
                     </ul>
                 </div>

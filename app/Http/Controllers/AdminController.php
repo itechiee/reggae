@@ -18,6 +18,7 @@ use App\Facilities;
 use App\Rooms;
 use Image;
 use App\Images;
+use App\Contents;
 
 class AdminController extends Controller
 {
@@ -126,6 +127,54 @@ class AdminController extends Controller
     }
 
     /**
+     * Create About Us
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function createContents()
+    {
+      
+        $data['page_heading'] = 'About  Us';
+        $data['about_us'] = rooms::all();
+
+        return view('admin.contents', $data);
+    }
+    /**
+     * Store store rooms
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function storeContents(Request $request)
+    {
+        $data['page_heading'] = 'Content';
+        $input = $request->all();
+
+        $validator = Validator::make($request->all(), [
+            'type' => 'required',
+            'description' => 'required',
+        ]);
+
+
+        if ($validator->fails()) {
+            return redirect('admin/contents')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        $contents = new contents();
+        $contents->name = $input['type'];
+        $contents->description = $input['description'];
+
+        if($contents->save()){
+            $request->session()->flash('alert-success', 'Content was successful added!');
+            return view('admin.contents', $data);
+        }
+        
+    }
+
+
+
+    /**
      * View rooms- Fetch room details from DB
      *
      * @return array
@@ -154,7 +203,7 @@ class AdminController extends Controller
     public function createRooftop()
     {
       
-        $data['page_heading'] = 'Rooms';
+        $data['page_heading'] = 'Roof Top';
         $data['roomsLists'] = rooms::all();
 
         return view('admin.rooftop_gallery', $data);

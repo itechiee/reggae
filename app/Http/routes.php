@@ -31,6 +31,8 @@ Route::post('admin/rooftop/store', 'AdminController@storeRooftop');
 Route::get('admin/rooftop/view_rooftop_details', 'AdminController@viewRooftop');
 Route::post('admin/rooftop/delete', 'AdminController@deleteRooftop');
 
+Route::get('admin/contents', 'AdminController@createContents');
+Route::post('admin/contents/store', 'AdminController@storeContents');
 //Route::get('admin/rooftop', 'AdminController@createRooftop');
 //Route::post('admin/Rooftop/store', 'AdminController@storeRooftop');
 

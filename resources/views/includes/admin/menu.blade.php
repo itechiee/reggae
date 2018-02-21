@@ -59,22 +59,10 @@
                         <li {{ (Request::is('*rooftop') ? 'class="active"' : '') }}>
                             <a href="{{ url ('admin/rooftop') }}"><i class="fa fa-edit fa-fw"></i> Roof Top</a>
                         </li>
-                        <li >
-                            <a href="#"><i class="fa fa-wrench fa-fw"></i> Content<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li {{ (Request::is('*Cafe') ? 'class="active"' : '') }}>
-                                    <a href="{{ url ('about_us') }}">About Us</a>
-                                </li>
-                                <li {{ (Request::is('*cafe') ? 'class="active"' : '') }}>
-                                    <a href="{{ url ('cafe' ) }}">Cafe</a>
-                                </li>
-                                <li {{ (Request::is('*contact_us') ? 'class="active"' : '') }}>
-                                    <a href="{{ url ('contact_us' ) }}">Contact Us</a>
-                                </li>
-                                
-                            </ul>
-                            <!-- /.nav-second-level -->
+                         <li {{ (Request::is('*rooftop') ? 'class="active"' : '') }}>
+                            <a href="{{ url ('admin/contents') }}"><i class="fa fa-edit fa-fw"></i> Contents</a>
                         </li>
+                        
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->

@@ -233,7 +233,7 @@ class AdminController extends Controller
 
         $fileName = null;
         if (request()->hasFile('file')) {
-            $file = request()->file('file');
+            $file = $request()->file('file');
             $file_type = $file->getClientOriginalExtension();
             $fileName = md5($file->getClientOriginalName() . time()) . "." . $file->getClientOriginalExtension();
             $file->move('../storage/app/uploads/', $fileName);    
@@ -434,5 +434,44 @@ class AdminController extends Controller
         $data['page_heading'] = 'Home Gallery';
         $data['homes'] = Home::orderBy('id','desc')->get();
         return view('admin.home_gallery', $data);
+    }
+
+    public function storeHomeGallery(Request $request)
+    {
+        $data['page_heading'] = 'Home Gallery';
+        $input = $request->all();
+        
+        // $rules['home_file_type'] = 'required|mimes:mp4,mov,m4v|max:2000';
+        // $rules['file'] = 'required';
+        // if(isset($input) && $input['home_file_type'] == "Photo"){
+        //     $rules['home_file_type'] = 'mimes:jpeg,jpg,png|max:2000';
+        // }
+        // $validator =Validator::make(Input::all(), $rules);
+
+        // if ($validator->fails()) {
+        //     return redirect('admin/header_gallery')
+        //                 ->withErrors($validator)
+        //                 ->withInput();
+        // }
+
+       
+        $fileName = null;
+        if ($request->has('file')) {  dd($request->all());
+            $file = Input::file('file');
+            $destinationPath = public_path(). '/uploads/home/';
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->move($destinationPath, $filename);
+        }
+dd('yy');
+         $picture = new images();
+         $picture->type =  $input['home_file_type'];
+         $picture->file_name = $fileName;
+         $picture->category = 'home';
+
+        if($picture->save()){
+            $request->session()->flash('alert-success', 'Gallery added successfully!');
+            return redirect('admin/header_gallery');
+        }
+        
     }
 }

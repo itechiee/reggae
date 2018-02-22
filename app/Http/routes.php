@@ -42,6 +42,7 @@ Route::get('admin/header_content/edit/{homeId}', 'AdminController@editHeaderBann
 Route::post('/admin/header_content/update', 'AdminController@updateHeaderBanners');
 Route::get('admin/header_content/delete/{homeId}', 'AdminController@deleteHeaderBanners');
 
-
 Route::get('admin/header_gallery', 'AdminController@headerGallery');
+Route::post('admin/header_gallery/store', 'AdminController@storeHomeGallery');
+
 Route::get('/', 'HomeController@index');

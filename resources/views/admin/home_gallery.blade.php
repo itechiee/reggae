@@ -27,8 +27,46 @@
                 </div>
               
 
-               
 
+
+                <div class="col-sm-12 form-group">
+                    <div class="row">
+                        <div class="col-lg-6">
+
+
+                            <form role="form" method="POST" action="{{ url('/admin/header_gallery/store') }}" enctype="multipart/form-data">
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                
+                                <div class="col-md-12 form-group">
+                                    <div class="col-md-6"><label>Type</label></div>
+				                    <div class="col-md-6">
+                                        <select class="form-control" name="home_file_type">
+                                            <option value="Video">Video</option>
+                                            <option value="Photo">Photo</option>
+                                        </select>
+                                    </div>				                    			                    
+			                    </div>
+
+                                <div class="col-md-12 form-group">
+                                    <div class="col-md-6"><label>Image/Video</label></div>
+				                    <div class="col-md-6">
+                                    <input type="file" name="file" id="file">	
+                                    </div>				                    			                    
+			                    </div>
+                                
+                                <div class="col-md-12 form-group">
+                                    <div class="col-md-12">
+                                        <button type="submit" class="btn btn-primary">Submit Button</button>
+                                        <button type="reset" class="btn btn-default">Reset Button</button>
+                                    </div>	                    			                    
+			                    </div>                                                           
+                            </form>
+                        </div>
+                        
+                    </div>
+                </div>             
+
+<hr class="divider"></hr>
 @if(count($homes) > 0)
     <div class="col-sm-12">
         <div class="row">
@@ -61,53 +99,6 @@
             </table>	
         </div>
     </div>
-@else
-
-<div class="col-sm-12">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <form role="form" method="POST" action="{{ url('/admin/header_content/store') }}" enctype="multipart/form-data">
-                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                
-                                <div class="col-md-12 form-group">
-                                    <div class="col-md-6"><label>Banner Image</label></div>
-				                    <div class="col-md-6">
-                                         <input type="file" name="banner_image" id="file">	
-                                    </div>				                    			                    
-			                    </div>
-
-                                <div class="col-md-12 form-group">
-                                    <div class="col-md-6"><label>Title</label></div>
-				                    <div class="col-md-6">
-                                         <input type="text" name="title" id="title">	
-                                    </div>				                    			                    
-			                    </div>
-
-                                <div class="col-md-12 form-group">
-                                    <div class="col-md-6"><label>Sub Title</label></div>
-				                    <div class="col-md-6">
-                                         <input type="text" name="subtitle" id="subtitle">	
-                                    </div>				                    			                    
-			                    </div>
-
-                                <div class="col-md-12 form-group">
-                                    <div class="col-md-6"><label>Content</label></div>
-				                    <div class="col-md-6">
-                                        <textarea rows="4" cols="50" name="description"></textarea>
-                                    </div>				                    			                    
-			                    </div>
-                                
-                                <div class="col-md-12 form-group">
-                                    <div class="col-md-12">
-                                        <button type="submit" class="btn btn-primary">Submit Button</button>
-                                        <button type="reset" class="btn btn-default">Reset Button</button>
-                                    </div>	                    			                    
-			                    </div>                                                           
-                            </form>
-                        </div>
-                        
-                    </div>
-                </div>
 
 @endif
             </div>
@@ -120,3 +111,6 @@
         </div>
 @stop
 
+<style>
+    .divider{width:100%;  border: 1px solid #eee;}
+</style>

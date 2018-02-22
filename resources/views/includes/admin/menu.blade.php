@@ -49,6 +49,21 @@
                         <li {{ (Request::is('/') ? 'class="active"' : '') }}>
                             <a href="{{ url ('admin/dashboard') }}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
+
+
+                        <li>
+                            <a href="#"><i class="fa fa-wrench fa-fw"></i>Home<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li {{ (Request::is('*header_content') ? 'class=active' : '') }}>
+                                    <a href="{{ url ('admin/header_content') }}">Home Content</a>
+                                </li>
+                                <li {{ (Request::is('*header_gallery') ? 'class=active' : '') }}>
+                                    <a href="{{ url ('admin/header_gallery' ) }}">Home Gallery</a>
+                                </li>
+                            </ul>
+
+                        </li>
+
                         <li {{ (Request::is('*facilities') ? 'class="active"' : '') }}>
                             <a href="{{ url ('admin/facilities') }}"><i class="fa fa-bar-chart-o fa-fw"></i> Facilities</a>
                             <!-- /.nav-second-level -->

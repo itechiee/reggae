@@ -19,6 +19,7 @@ use App\Rooms;
 use Image;
 use App\Images;
 use App\Contents;
+use App\Home;
 
 class AdminController extends Controller
 {
@@ -330,5 +331,108 @@ class AdminController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Create header banners
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function headerBanners()
+    {
+        $data['page_heading'] = 'Home Content';
+        $data['homes'] = Home::orderBy('id','desc')->get();
+        return view('admin.home', $data);
+    }
+
+    /**
+     * Store Facilities
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function storeHeaderBanners(Request $request)
+    {
+        $input = $request->all();
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|max:200',
+            'subtitle' => 'required|max:300',
+            'description' => 'required|max:500',
+            'banner_image' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return redirect('admin/header_content')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        $home = new Home();
+        $home->title = $input['title'];
+        $home->subtitle = $input['subtitle'];
+        $home->description = $input['description'];
+
+        $file = Input::file('banner_image');
+        $destinationPath = public_path(). '/uploads/banner/';
+        $filename = time() . '.' . $file->getClientOriginalExtension();
+        $file->move($destinationPath, $filename);
+        $home->banner_image = $filename;
+
+        if($home->save()){
+            $request->session()->flash('alert-success', 'Home content added successfully!');
+            return redirect('admin/header_content');
+        }
+    }
+
+    public function editHeaderBanners($homeId)
+    {
+        $data['page_heading'] = 'Header';
+        $data['homes'] = Home::where('id', $homeId)->first();
+        return view('admin.edit_home', $data);
+    }
+
+    public function updateHeaderBanners(Request $request)
+    {
+        $home = Home::find($request->id);
+        $home->title = $request->title;
+        $home->subtitle = $request->subtitle;
+        $home->description = $request->description;
+        $filename = $home->banner_image;
+        if ($request->file('banner_image')) {
+            $file = Input::file('banner_image');
+            $destinationPath = public_path(). '/uploads/banner/';
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->move($destinationPath, $filename);
+            $oldFile = $destinationPath.$home->banner_image;
+            if(file_exists($oldFile)){
+                @unlink($oldFile);
+            }
+        }
+
+        $home->banner_image = $filename;
+        if($home->save()){
+            $request->session()->flash('alert-success', 'Home content updated successfully!');
+            return redirect('admin/header_content');
+        }
+    }
+    
+    public function deleteHeaderBanners($homeId)
+    {
+        $home = Home::find($homeId);
+        if(count($home) > 0) {
+            $home->delete();
+            $destinationPath = public_path(). '/uploads/banner/';
+            $oldFile = $destinationPath.$home->banner_image;
+            if(file_exists($oldFile)){
+                @unlink($oldFile);
+            }
+            \Session::flash('alert-info', 'Home content deleted successfully!');            
+        }
+        return redirect('admin/header_content');
+    }
+
+    public function headerGallery()
+    {
+        $data['page_heading'] = 'Home Gallery';
+        $data['homes'] = Home::orderBy('id','desc')->get();
+        return view('admin.home_gallery', $data);
     }
 }

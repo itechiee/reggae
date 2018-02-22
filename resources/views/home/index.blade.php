@@ -620,7 +620,6 @@
                                 </div>
                             </div>
                             <section id="rooftop" class="spaces-panel ">
-
                                 <center>
                                     <div class="rooftop-reggae-wrapper">
                                         <video class="rooftop-reggae-video" id="rooftop-reggae-video" loop>

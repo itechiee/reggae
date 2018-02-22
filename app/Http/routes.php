@@ -36,4 +36,12 @@ Route::post('admin/contents/store', 'AdminController@storeContents');
 //Route::get('admin/rooftop', 'AdminController@createRooftop');
 //Route::post('admin/Rooftop/store', 'AdminController@storeRooftop');
 
+Route::get('admin/header_content', 'AdminController@headerBanners');
+Route::post('admin/header_content/store', 'AdminController@storeHeaderBanners');
+Route::get('admin/header_content/edit/{homeId}', 'AdminController@editHeaderBanners');
+Route::post('/admin/header_content/update', 'AdminController@updateHeaderBanners');
+Route::get('admin/header_content/delete/{homeId}', 'AdminController@deleteHeaderBanners');
+
+
+Route::get('admin/header_gallery', 'AdminController@headerGallery');
 Route::get('/', 'HomeController@index');

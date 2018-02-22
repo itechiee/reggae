@@ -99,8 +99,8 @@
                                 
                                 <div class="col-md-12 form-group">
                                     <div class="col-md-12">
-                                        <button type="submit" class="btn btn-primary">Submit Button</button>
-                                        <button type="reset" class="btn btn-default">Reset Button</button>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        <button type="reset" class="btn btn-default">Reset</button>
                                     </div>	                    			                    
 			                    </div>                                                           
                             </form>

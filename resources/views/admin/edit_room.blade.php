@@ -8,7 +8,7 @@
                     <h1 class="page-header">{{ $page_heading }}</h1>
                 </div>
                 <div class="col-lg-6">
-                       <a href="{{ url('/admin/facilities/view_facility_details') }}" class="page-header pull-right"> <button type="View" class="btn btn-default">Back</button></a>
+                       <a href="{{ url('/admin/rooms/view_room_details') }}" class="page-header pull-right"> <button type="View" class="btn btn-default">Back</button></a>
                 </div>
                 <!-- /.col-lg-12 -->
            </div>
@@ -34,27 +34,28 @@
                 <div class="col-sm-12">
                     <div class="row">
                         <div class="col-lg-6">
-                        {!! Form::open(['url' => 'admin/facilities/update', 'method' => 'post', 'enctype' => 'multipart/form-data']) !!}
-                        {!! Form::hidden('id', $facility->id, ['class' => 'form-control', 'id' => 'facilityId']) !!}
-
+                        {!! Form::open(['url' => 'admin/rooms/update', 'method' => 'post' , 'enctype' => 'multipart/form-data']) !!}
+                        {!! Form::hidden('id', $room->roomId, ['class' => 'form-control', 'id' => 'roomId']) !!}
                               
                                 <div class="col-md-12 col-sm-12 col-xs-12 form-group">
-                                    <div class="col-md-6 col-sm-6 col-xs-6"><label>Facility Name</label></div>
+                                    <div class="col-md-6 col-sm-6 col-xs-6"><label>Room Name</label></div>
 				                    <div class="col-md-6 col-sm-6 col-xs-6">
-                                        {!! Form::text('facility_name', $facility->Description, ['class' => 'form-control', 'id' => 'Description']) !!}
+                                        {!! Form::text('room_name', $room->room_name, ['class' => 'form-control', 'id' => 'Description']) !!}
                                     </div>				                    			                    
 			                    </div>
-
-                                <div class="col-md-12 col-sm-12 col-xs-12 form-group">
-                                    <div class="col-md-6 col-sm-6 col-xs-6"><label>Alignment(For UI)</label></div>
+			                     <div class="col-md-12 col-sm-12 col-xs-12 form-group">
+                                    <div class="col-md-6 col-sm-6 col-xs-6"><label>Price(Starting price)</label></div>
 				                    <div class="col-md-6 col-sm-6 col-xs-6">
-                                    <select class="form-control" name="align_section">
-                                        <option <?php $facility->Section == 'Left' ? ' selected="selected"' : '';?> value="Left">Left</option>
-                                        <option <?php $facility->Section == 'Right' ? ' selected="selected"' : '';?> value="Right">Right</option>
-                                    </select>
+                                        {!! Form::text('price', $room->price, ['class' => 'form-control', 'id' => 'price']) !!}
                                     </div>				                    			                    
 			                    </div>
-
+			                    
+			                    <div class="col-md-12 col-sm-12 col-xs-12 form-group">
+                                    <div class="col-md-6 col-sm-6 col-xs-6"><label>Description</label></div>
+				                    <div class="col-md-6 col-sm-6 col-xs-6">
+                                        {!! Form::textarea('room_description', $room->room_description, ['class' => 'form-control', 'id' => 'room_description', 'rows' => 4, 'cols' =>50]) !!}	
+                                    </div>				                    			                    
+			                    </div>
                                 
                                 <div class="col-md-12 col-sm-12 col-xs-12 form-group">
                                     <div class="col-md-12">

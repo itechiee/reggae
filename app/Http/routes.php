@@ -21,18 +21,27 @@ Route::get('admin/dashboard', 'AdminController@index');
 Route::get('admin/facilities', 'AdminController@createFacilities');
 Route::post('admin/facilities/store', 'AdminController@storeFacilities');
 Route::get('admin/facilities/view_facility_details', 'AdminController@viewFacilities');
+Route::get('admin/facilities/edit/{id}', 'AdminController@editFacility');
+Route::post('admin/facilities/update', 'AdminController@updateFacility');
+Route::get('admin/facilities/delete/{id}', 'AdminController@deleteFacility');
 
 Route::get('admin/rooms', 'AdminController@createRooms');
 Route::post('admin/rooms/store', 'AdminController@storeRooms');
 Route::get('admin/rooms/view_room_details', 'AdminController@viewRooms');
+Route::get('admin/rooms/edit/{id}', 'AdminController@editRoom');
+Route::post('admin/rooms/update', 'AdminController@updateRoom');
+Route::get('admin/rooms/delete/{id}', 'AdminController@deleteRoom');
  
 Route::get('admin/rooftop', 'AdminController@createRooftop');
 Route::post('admin/rooftop/store', 'AdminController@storeRooftop');
 Route::get('admin/rooftop/view_rooftop_details', 'AdminController@viewRooftop');
-Route::post('admin/rooftop/delete', 'AdminController@deleteRooftop');
+Route::get('admin/rooftop/edit/{id}', 'AdminController@editRooftop');
+Route::post('admin/rooftop/update', 'AdminController@updateRooftop');
+Route::get('admin/rooftop/delete/{id}', 'AdminController@deleteRooftop');
 
 Route::get('admin/contents', 'AdminController@createContents');
 Route::post('admin/contents/store', 'AdminController@storeContents');
+
 //Route::get('admin/rooftop', 'AdminController@createRooftop');
 //Route::post('admin/Rooftop/store', 'AdminController@storeRooftop');
 
@@ -43,6 +52,13 @@ Route::post('/admin/header_content/update', 'AdminController@updateHeaderBanners
 Route::get('admin/header_content/delete/{homeId}', 'AdminController@deleteHeaderBanners');
 
 Route::get('admin/header_gallery', 'AdminController@headerGallery');
+
 Route::post('admin/header_gallery/store', 'AdminController@storeHomeGallery');
+
+
+Route::get('admin/contents/view_contents_details', 'AdminController@viewContents');
+//Route::get('admin/rooftop', 'AdminController@createRooftop');
+//Route::post('admin/Rooftop/store', 'AdminController@storeRooftop');
+
 
 Route::get('/', 'HomeController@index');

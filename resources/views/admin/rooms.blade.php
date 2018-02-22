@@ -8,7 +8,7 @@
                     <h1 class="page-header">{{ $page_heading }}</h1>
                 </div>
                 <div class="col-lg-6">
-                       <a href="{{ url('/admin/rooms/view_room_detail') }}" class="page-header pull-right"> <button type="View" class="btn btn-default">View</button></a>
+                       <a href="{{ url('/admin/rooms/view_room_details') }}" class="page-header pull-right"> <button type="View" class="btn btn-primary">View</button></a>
                 </div>
                 <!-- /.col-lg-12 -->
            </div>
@@ -29,29 +29,39 @@
                     @endforeach
                 </div>
                 <div class="col-sm-12">
-                    <div class="row card-box" >
+                    <div class="row" >
                         <div class="col-lg-6">
-                            <form role="form" method="POST" action="{{ url('/admin/rooms/store') }}">
-                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                <div class="form-group">
-                                    <label>Room Name</label>
-                                    <input class="form-control" type="text" name="room_name">
-                                </div>
-                               
-                               
-                                <div class="form-group">
-                                    <label>Price(Starting price)</label>
-                                    <input class="form-control" type="number" name="room_price">
-                                </div>
 
-                                <div class="form-group">
-                                    <label>Description</label>
-                                    <textarea  class="form-control" name="room_description"></textarea>
-                                </div>
-                               
-                                <button type="submit" class="btn btn-default">Submit</button>
-                                <button type="reset" class="btn btn-default">Reset</button>
+                             <form role="form" method="POST" action="{{ url('/admin/rooms/store') }}" >
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                
+                                <div class="col-md-12 form-group">
+                                    <div class="col-md-6"><label>Room Name</label></div>
+                                    <div class="col-md-6">
+                                         <input class="form-control" name="room_name"> 
+                                    </div>                                                                
+                                </div> 
+                                 <div class="col-md-12 form-group">
+                                    <div class="col-md-6"><label>Price(Starting price)</label></div>
+                                    <div class="col-md-6">
+                                         <input class="form-control" name="room_price"> 
+                                    </div>                                                                
+                                </div> 
+                                 <div class="col-md-12 form-group">
+                                    <div class="col-md-6"><label>Description</label></div>
+                                    <div class="col-md-6">
+                                         <input class="form-control" name="room_description"> 
+                                    </div>                                                                
+                                </div> 
+                                
+                                <div class="col-md-12 form-group">
+                                    <div class="col-md-12">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        <button type="reset" class="btn btn-default">Reset</button>
+                                    </div>                                                      
+                                </div>                                                           
                             </form>
+
                         </div>
                         
                     </div>

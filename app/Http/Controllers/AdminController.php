@@ -182,6 +182,7 @@ class AdminController extends Controller
      */
     public function viewContents()
     {
+        $data['page_heading'] = 'List Contents';
         $data['contents'] = contents::all();
         return view('admin.view_contents', $data);
     }
@@ -193,6 +194,7 @@ class AdminController extends Controller
      */
     public function viewRooms()
     {
+        $data['page_heading'] = 'List Rooms';
         $data['roomsLists'] = rooms::all();
         return view('admin.view_rooms', $data);
     }
@@ -203,6 +205,7 @@ class AdminController extends Controller
      */
     public function viewFacilities()
     {
+        $data['page_heading'] = 'List Facilities';
         $data['facilitiesList'] = facilities::all();
         return view('admin.view_facility_details', $data);
     }
@@ -268,80 +271,193 @@ class AdminController extends Controller
      */
     public function viewRooftop()
     {
+        $data['page_heading'] = 'List Rooftop';
         $data['rooftopList'] = images::all();
         return view('admin.view_rooftop', $data);
     }
-
-
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
+     * Edit facility.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function editFacility($id)
     {
-        //
+        $data['page_heading'] = 'Edit Facility';
+        $data['facility'] = facilities::find($id);
+        return view('admin.edit_facilities', $data);
     }
-
     /**
-     * Show the form for editing the specified resource.
+     * Update facility.
+     *
+     * @param  Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateFacility(Request $request)
+    {
+        $data['page_heading'] = 'Update Facility';
+        
+        $input = $request->all();
+        $validator = Validator::make($request->all(), [
+            'facility_name' => 'required|max:100',
+            'align_section' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return redirect('admin/facilities/view_facility_details')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+        $facility = facilities::find($input['id']);
+        $facility->Description = $input['facility_name'];
+        $facility->Section = $input['align_section'];
+
+        if($facility->save()){
+            $request->session()->flash('alert-success', 'Facility updated successfully!');
+            return redirect('admin/facilities/view_facility_details');
+        }
+    }
+    /**
+     * Delete facility.
+     *
+     * @param  int  $Id
+     * @return \Illuminate\Http\Response
+     */
+     public function deleteFacility($Id)
+    {
+        $facility = facilities::find($Id);
+        if(count($facility) > 0) {
+            $facility->delete();
+            \Session::flash('alert-info', 'Facility deleted successfully!');            
+        }
+        return redirect('admin/facilities/view_facility_details');
+    }
+    /**
+     * Edit Room.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function editRoom($id)
+    {
+        $data['page_heading'] = 'Edit Room';
+        $data['room'] = rooms::find($request->id);
+        return view('admin.edit_room', $data);
+    }
+    /**
+     * Update facility.
+     *
+     * @param  Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateRoom(Request $request)
+    {
+        $data['page_heading'] = 'Update Room';
+        
+        $input = $request->all();
+        $validator = Validator::make($request->all(), [
+            'room_name' => 'required|max:50',
+            'price' => 'required|numeric',
+            'room_description' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('admin/rooms/view_room_details')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        $room = Rooms::find($request->id);
+        //$room = rooms::where('roomId', $request->id)->first();
+        $room->room_name = $request->room_name;
+        $room->price = $request->price;
+        $room->room_description = $request->room_description;
+        
+        if($room->save()){
+             $request->session()->flash('alert-success', 'Room updated successfully!');
+            return redirect('admin/rooms/view_room_details');
+        }
+
+
+    }
+    /**
+     * Delete Room.
+     *
+     * @param  int  $Id
+     * @return \Illuminate\Http\Response
+     */
+     public function deleteRoom($Id)
+    {
+        $room = rooms::find($Id);
+        if(count($room) > 0) {
+            $room->delete();
+            \Session::flash('alert-info', 'Room deleted successfully!');            
+        }
+        return redirect('admin/facilities/view_room_details');
+    }
+    /**
+     * Edit facility.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function editRooftop($id)
     {
-        //
+        $data['page_heading'] = 'Edit Rooftop';
+        $data['rooftop'] = images::find($id);
+        return view('admin.edit_rooftop', $data);
     }
     /**
-     * Delete Roof top
+     * Update facility.
      *
-     * @param  int  $id
+     * @param  Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function deleteRooftop($id)
-    {dd($id);
-        if(isset($id)){
-            $deleteId = images::delete();
-            if($deleteId ){
-                return response()->json(['msg' => '1']);
+    public function updateRooftop(Request $request)
+    {
+        $data['page_heading'] = 'Update Rooftop';
+        
+        $input = $request->all();
+        
+        $rooftop = images::find($input['id']);
+        $rooftop->type = $input['rooftop_type'];
+
+        $filename = $rooftop->file_name;
+        
+            if ($request->file('file')) {
+                $file = Input::file('file');
+                $destinationPath = public_path(). '/uploads/rooftop/';
+                $filename = time() . '.' . $file->getClientOriginalExtension();
+                $file->move($destinationPath, $filename);
+                if($input['rooftop_type'] == 'Video'){
+                $oldFile = $destinationPath.$rooftop->file_name;
+                    if(file_exists($oldFile)){
+                        @unlink($oldFile);
+                    }
+                }
             }
+        
+
+        $rooftop->file_name = $filename;
+
+        if($rooftop->save()){
+            $request->session()->flash('alert-success', 'Facility updated successfully!');
+            return redirect('admin/rooftop/view_rooftop_details');
         }
     }
-
     /**
-     * Update the specified resource in storage.
+     * Delete facility.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int  $Id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+     public function deleteRooftop($Id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $facility = facilities::find($Id);
+        if(count($facility) > 0) {
+            $facility->delete();
+            \Session::flash('alert-info', 'Facility deleted successfully!');            
+        }
+        return redirect('admin/facilities/view_facility_details');
     }
 
     /**

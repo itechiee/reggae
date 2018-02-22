@@ -1,13 +1,22 @@
 @extends ('layouts.admin_dashboard')
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script type="text/javascript"  src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript"  src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
-@section('section')
 
+@section('section')
         <div id="page-wrapper">
             <div class="row">
+                <div class="col-lg-6">
+                    <h1 class="page-header">{{ $page_heading }}</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+           </div>
+           <div class="flash-message">
+                @if($errors->has())
+                   @foreach ($errors->all() as $error)
+                      <h4 class="alert alert-danger">{{ $error }}</h4>
+                  @endforeach
+                @endif
+            </div>
+
                 <div class="col-sm-12">
-                    <h3>Roof Top</h3>
                     <table id="roof_top" class="table table-bordered">
                         <thead>
                             <tr>
@@ -18,10 +27,10 @@
                         <tbody>
                             @if(count($rooftopList) >0)                          
                                 @foreach($rooftopList as $rooftop)
-	                                 <tr class="success">
+	                                 <tr>
 	                                 	@if($rooftop->type == 'Photo')
 	                                 	<td>
-	                                 		<img src="{{ asset('../storage/app/uploads/'.$rooftop->file_name) }}" width="50" height="50"></img>
+	                                 		{!! Html::image('/uploads/rooftop/'.$rooftop->file_name,'image',['class' => 'col-md-4 col-sm-2']) !!}
 	                                 	</td>
 	                                 	@else
 
@@ -30,10 +39,14 @@
 											<!-- <video width='320' height='240' controls> <source src="{{ asset('../storage/app/uploads/'.$rooftop->file_name) }}" type='video/mp4'>Your browser does not support the video tag.</source></video> -->
 										</td>
 										@endif
-										<td>
-											<a href="" class='btn btn-primary glyphicon glyphicon-edit'>
-										    <a href="" class='trash btn btn-primary glyphicon glyphicon-remove' id='{{$rooftop->id}}'>
-										</td>
+                                        <td>
+                                            <div>
+                                                <a href="{{ url('/admin/rooftop/edit/').'/'.$rooftop->id }}"><i class="fa fa-edit"></i>  </a> 
+                                                /
+                                                <a href="{{ url('/admin/rooftop/delete').'/'.$rooftop->id }}"><i class="glyphicon glyphicon-remove"></i> </a> 
+                                            </div>
+                                        </td>
+
 	                                 </tr>
                                 @endforeach
                           	 @else

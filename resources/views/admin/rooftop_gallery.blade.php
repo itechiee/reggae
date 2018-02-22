@@ -8,7 +8,7 @@
                     <h1 class="page-header">{{ $page_heading }}</h1>
                 </div>
                 <div class="col-lg-6">
-                       <a href="{{ url('/admin/rooftop/view_rooftop_details') }}" class="page-header pull-right"> <button type="View" class="btn btn-default">View</button></a>
+                       <a href="{{ url('/admin/rooftop/view_rooftop_details') }}" class="page-header pull-right"> <button type="View" class="btn btn-primary">View</button></a>
                 </div>
                 <!-- /.col-lg-12 -->
            </div>
@@ -30,24 +30,28 @@
 			    @endforeach
 			  </div>
                 <div class="col-sm-12">
-                    <div class="row card-box" >
+                    <div class="row" >
                         <div class="col-lg-6">
                           
                             <form action="{{ url('/admin/rooftop/store') }}" method="POST" enctype="multipart/form-data">
                             	<input type="hidden" value="{{ csrf_token() }}" name="_token">
-                            	<div class="form-group">
-                                    <label>Type</label>
-                                    <select class="form-control" name="rooftop_type">
-                                        <option value="Video">Video</option>
-                                        <option value="Photo">Photo</option>
-                                    </select>
+                                <div class="col-md-12 form-group">
+                                    <div class="col-md-6"><label>Type</label></div>
+                                    <div class="col-md-6">
+                                        <select class="form-control" name="rooftop_type">
+                                            <option value="Video">Video</option>
+                                            <option value="Photo">Photo</option>
+                                        </select> 
+                                    </div>                                                                
+                                </div> 
+                                <div class="col-md-12 form-group">
+                                    <div class="col-md-6"><label>Select image to upload:</label></div>
+                                    <div class="col-md-6">
+                                         <input type="file" name="file" id="file">  
+                                    </div>                                                                  
                                 </div>
-                               <div class="form-group">
-				                    <label>Select image to upload:</label>
-				                    <input type="file" name="file" id="file">				                    
-			                    </div>
 
-			                    <input type="submit" class="btn btn-default" value="Upload" name="submit">
+			                    <input type="submit" class="btn btn-primary" value="Upload" name="submit">
 			                    <button type="reset" class="btn btn-default">Reset</button>
 			                </form>
                         </div>
@@ -57,5 +61,9 @@
             </div>
             
 		</div>
+        <!-- /#page-wrapper -->
+
+            
+</div>
 @stop
 

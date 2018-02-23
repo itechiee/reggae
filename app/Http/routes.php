@@ -41,6 +41,10 @@ Route::get('admin/rooftop/delete/{id}', 'AdminController@deleteRooftop');
 
 Route::get('admin/contents', 'AdminController@createContents');
 Route::post('admin/contents/store', 'AdminController@storeContents');
+Route::get('admin/contents/view_content_details', 'AdminController@viewContents');
+Route::get('admin/contents/edit/{id}', 'AdminController@editContent');
+Route::post('admin/contents/update', 'AdminController@updateContent');
+Route::get('admin/contents/delete/{id}', 'AdminController@deleteContent');
 
 //Route::get('admin/rooftop', 'AdminController@createRooftop');
 //Route::post('admin/Rooftop/store', 'AdminController@storeRooftop');

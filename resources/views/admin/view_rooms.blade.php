@@ -6,6 +6,9 @@
                 <div class="col-lg-6">
                     <h1 class="page-header">{{ $page_heading }}</h1>
                 </div>
+                <div class="col-lg-6">
+                       <a href="{{ url('/admin/rooms') }}" class="page-header pull-right"> <button type="View" class="btn btn-primary">Add</button></a>
+                </div>
                 <!-- /.col-lg-12 -->
            </div>
            <div class="flash-message">
@@ -32,6 +35,7 @@
                                 <th>Room Name</th>
                                 <th>Price</th>
                                 <th>Description</th>
+                                <th>Image</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -42,6 +46,9 @@
                                     <td>{{$room->room_name}}</td>
                                     <td>{{$room->price}}</td>
                                     <td>{{$room->room_description}}</td>
+                                    <td>
+                                      {!! Html::image('/uploads/rooms/'.$room->image,'image',['class' => 'col-md-4 col-sm-2']) !!}
+                                    </td>
                                     <td><div>
                                         <a href="{{ url('/admin/rooms/edit/').'/'.$room->id }}"><i class="fa fa-edit"></i>  </a> 
                                         /
@@ -50,7 +57,7 @@
                                  </tr>
                                 @endforeach
                             @else
-                                <tr><td colspan="2">No Results</td></tr>
+                                <tr><td colspan="5">No Results</td></tr>
                             @endif
                         </tbody>
                     </table>    

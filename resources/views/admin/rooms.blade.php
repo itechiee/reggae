@@ -32,7 +32,7 @@
                     <div class="row" >
                         <div class="col-lg-6">
 
-                             <form role="form" method="POST" action="{{ url('/admin/rooms/store') }}" >
+                             <form role="form" method="POST" action="{{ url('/admin/rooms/store') }}" enctype="multipart/form-data">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 
                                 <div class="col-md-12 form-group">
@@ -53,6 +53,12 @@
                                          <input class="form-control" name="room_description"> 
                                     </div>                                                                
                                 </div> 
+                                <div class="col-md-12 form-group">
+                                    <div class="col-md-6"><label>Select image to upload:</label></div>
+                                    <div class="col-md-6">
+                                         <input type="file" name="file" id="file">  
+                                    </div>                                                                  
+                                </div>
                                 
                                 <div class="col-md-12 form-group">
                                     <div class="col-md-12">

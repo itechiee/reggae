@@ -35,7 +35,7 @@
                     <div class="row">
                         <div class="col-lg-6">
                         {!! Form::open(['url' => 'admin/rooms/update', 'method' => 'post' , 'enctype' => 'multipart/form-data']) !!}
-                        {!! Form::hidden('id', $room->roomId, ['class' => 'form-control', 'id' => 'roomId']) !!}
+                        {!! Form::hidden('id', $room->id, ['class' => 'form-control', 'id' => 'roomId']) !!}
                               
                                 <div class="col-md-12 col-sm-12 col-xs-12 form-group">
                                     <div class="col-md-6 col-sm-6 col-xs-6"><label>Room Name</label></div>
@@ -56,6 +56,22 @@
                                         {!! Form::textarea('room_description', $room->room_description, ['class' => 'form-control', 'id' => 'room_description', 'rows' => 4, 'cols' =>50]) !!}	
                                     </div>				                    			                    
 			                    </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group">
+                                        <div class="col-md-6 col-sm-6 col-xs-6">
+                                            <label>Current Image</label>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6 col-xs-6">
+                                        {!! Html::image('/uploads/rooms/'.$room->image,'image',['class' => 'col-md-6 col-sm-2', 'width' => '100']) !!}
+                                        </div>                                                                  
+                                </div> 
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group">
+                                    <div class="col-md-6 col-sm-6 col-xs-6">
+                                        <label>Update</label>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-6">
+                                         <input type="file" name="file" id="file">  
+                                    </div>                                                                  
+                                </div>
                                 
                                 <div class="col-md-12 col-sm-12 col-xs-12 form-group">
                                     <div class="col-md-12">

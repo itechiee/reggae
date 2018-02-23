@@ -7,6 +7,9 @@
                 <div class="col-lg-6">
                     <h1 class="page-header">{{ $page_heading }}</h1>
                 </div>
+                 <div class="col-lg-6">
+                       <a href="{{ url('/admin/facilities') }}" class="page-header pull-right"> <button type="View" class="btn btn-primary">Add</button></a>
+                </div>
                 <!-- /.col-lg-12 -->
            </div>
            <div class="flash-message">
@@ -44,12 +47,14 @@
                                         <td> {{$facility->Section}} </td>
                                         <td> 
                                         <div>
-                                            <a href="{{ url('/admin/facilities/edit/').'/'.$facility->id }}"><i class="fa fa-edit"></i> Edit </a> 
+                                            <a href="{{ url('/admin/facilities/edit/').'/'.$facility->id }}"><i class="fa fa-edit"></i>  </a> 
                                         /
-                                            <a href="{{ url('/admin/facilities/delete').'/'.$facility->id }}"><i class="glyphicon glyphicon-remove"></i> Delete </a> </td>
+                                            <a href="{{ url('/admin/facilities/delete').'/'.$facility->id }}"><i class="glyphicon glyphicon-remove"></i>  </a> </td>
                                         </div>
                                     </tr>
                                 @endforeach 
+                            @else
+                                 <tr><td colspan="3">No Results</td></tr>
                             @endif
                         </tbody>
                     </table>    

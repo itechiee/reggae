@@ -108,19 +108,28 @@ class AdminController extends Controller
             'room_name' => 'required|max:50',
             'room_price' => 'required|numeric',
             'room_description' => 'required',
+            'file'=>'required',
         ]);
-
 
         if ($validator->fails()) {
             return redirect('admin/rooms')
                         ->withErrors($validator)
                         ->withInput();
         }
+        
+        $filename = null;
+        if (request()->hasFile('file')) {
+            $file = Input::file('file');
+            $destinationPath = public_path(). '/uploads/rooms/';
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->move($destinationPath, $filename);   
+        }
 
         $rooms = new rooms();
         $rooms->room_name = $input['room_name'];
         $rooms->price = $input['room_price'];
         $rooms->room_description = $input['room_description'];
+        $rooms->image = $filename;
 
         if($rooms->save()){
             $request->session()->flash('alert-success', 'Room was successful added!');
@@ -340,7 +349,7 @@ class AdminController extends Controller
     public function editRoom($id)
     {
         $data['page_heading'] = 'Edit Room';
-        $data['room'] = rooms::find($request->id);
+        $data['room'] = rooms::find($id);
         return view('admin.edit_room', $data);
     }
     /**
@@ -365,12 +374,21 @@ class AdminController extends Controller
                         ->withErrors($validator)
                         ->withInput();
         }
+        $room = Rooms::find($input['id']);
+        
+        $filename = $room->image;
+        
+            if ($request->file('file')) {
+                $file = Input::file('file');
+                $destinationPath = public_path(). '/uploads/rooms/';
+                $filename = time() . '.' . $file->getClientOriginalExtension();
+                $file->move($destinationPath, $filename);
+            }
 
-        $room = Rooms::find($request->id);
-        //$room = rooms::where('roomId', $request->id)->first();
-        $room->room_name = $request->room_name;
-        $room->price = $request->price;
-        $room->room_description = $request->room_description;
+        $room->room_name = $input['room_name'];
+        $room->price = $input['price'];
+        $room->room_description = $input['room_description'];
+        $room->image = $filename;
         
         if($room->save()){
              $request->session()->flash('alert-success', 'Room updated successfully!');
@@ -392,10 +410,10 @@ class AdminController extends Controller
             $room->delete();
             \Session::flash('alert-info', 'Room deleted successfully!');            
         }
-        return redirect('admin/facilities/view_room_details');
+        return redirect('admin/rooms/view_room_details');
     }
     /**
-     * Edit facility.
+     * Edit Rooftop.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -407,7 +425,7 @@ class AdminController extends Controller
         return view('admin.edit_rooftop', $data);
     }
     /**
-     * Update facility.
+     * Update Rooftop.
      *
      * @param  Request  $request
      * @return \Illuminate\Http\Response
@@ -445,7 +463,7 @@ class AdminController extends Controller
         }
     }
     /**
-     * Delete facility.
+     * Delete Rooftop.
      *
      * @param  int  $Id
      * @return \Illuminate\Http\Response
@@ -458,6 +476,55 @@ class AdminController extends Controller
             \Session::flash('alert-info', 'Facility deleted successfully!');            
         }
         return redirect('admin/facilities/view_facility_details');
+    }
+    /**
+     * Edit Content.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function editContent($id)
+    {
+        $data['page_heading'] = 'Edit Content';
+        $data['content'] = contents::find($id);
+        return view('admin.edit_content', $data);
+    }
+    /**
+     * Update Content.
+     *
+     * @param  Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateContent(Request $request)
+    {
+        $data['page_heading'] = 'Update Content';
+        
+        $input = $request->all();
+
+        $content = contents::find($input['id']);
+        $content->name = $input['type'];
+        $content->description = $input['description'];
+
+        if($content->save()){
+            $request->session()->flash('alert-success', 'Content updated successfully!');
+            return redirect('admin/contents/view_contents_details');
+        }
+        
+    }
+    /**
+     * Delete Content.
+     *
+     * @param  int  $Id
+     * @return \Illuminate\Http\Response
+     */
+     public function deleteContent($Id)
+    {
+        $contents = contents::find($Id);
+        if(count($contents) > 0) {
+            $contents->delete();
+            \Session::flash('alert-info', 'Content deleted successfully!');            
+        }
+        return redirect('admin/contents/view_contents_details');
     }
 
     /**

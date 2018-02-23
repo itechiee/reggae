@@ -45,14 +45,36 @@
                                     {!! Html::image('/uploads/banner/'.$homes->banner_image,'banner',['class' => 'col-md-6 col-sm-2', 'width' => '100']) !!}
                                     </div>				                    			                    
                                 </div>  
+
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group">
+                                    <div class="col-md-6 col-sm-6 col-xs-6">
+                                        <label>Current Mobile Banner Image</label>
+                                    </div>
+				                    <div class="col-md-6 col-sm-6 col-xs-6">
+                                    {!! Html::image('/uploads/banner/'.$homes->mobile_banner_image,'banner',['class' => 'col-md-6 col-sm-2', 'width' => '100']) !!}
+                                    </div>				                    			                    
+                                </div>
+                                
                                 <div class="col-md-12 col-sm-12 col-xs-12 form-group">
                                     <div class="col-md-6 col-sm-6 col-xs-6">
                                         <label>Update Banner Image</label>
                                     </div>
 				                    <div class="col-md-6 col-sm-6 col-xs-6">
-                                         <input type="file" name="banner_image" id="file">	
+                                         <input type="file" name="banner_image" id="banner_image">	
                                     </div>				                    			                    
 			                    </div>
+
+
+                                  
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group">
+                                    <div class="col-md-6 col-sm-6 col-xs-6">
+                                        <label>Update Mobile Banner Image</label>
+                                    </div>
+				                    <div class="col-md-6 col-sm-6 col-xs-6">
+                                         <input type="file" name="mobile_banner_image" id="mobile_banner_image">	
+                                    </div>				                    			                    
+			                    </div>
+
 
                                 <div class="col-md-12 col-sm-12 col-xs-12 form-group">
                                     <div class="col-md-6 col-sm-6 col-xs-6"><label>Title</label></div>

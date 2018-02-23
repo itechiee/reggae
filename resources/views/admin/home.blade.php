@@ -74,7 +74,14 @@
                                 <div class="col-md-12 form-group">
                                     <div class="col-md-6"><label>Banner Image</label></div>
 				                    <div class="col-md-6">
-                                         <input type="file" name="banner_image" id="file">	
+                                         <input type="file" name="banner_image" id="banner_image">	
+                                    </div>				                    			                    
+			                    </div>
+
+                                <div class="col-md-12 form-group">
+                                    <div class="col-md-6"><label>Mobile Banner Image</label></div>
+				                    <div class="col-md-6">
+                                         <input type="file" name="mobile_banner_image" id="mobile_banner_image">	
                                     </div>				                    			                    
 			                    </div>
 

@@ -38,8 +38,8 @@
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 
                                 <div class="col-md-12 form-group">
-                                    <div class="col-md-6"><label>Type</label></div>
-				                    <div class="col-md-6">
+                                    <div class="col-md-5"><label>Type</label></div>
+				                    <div class="col-md-7">
                                         <select class="form-control" name="home_file_type">
                                             <option value="Photo">Photo</option>
                                             <option value="Video">Video</option>                                            
@@ -48,9 +48,23 @@
 			                    </div>
 
                                 <div class="col-md-12 form-group">
-                                    <div class="col-md-6"><label>Image/Video</label></div>
-				                    <div class="col-md-6">
-                                    <input type="file" name="file" id="file">	
+                                    <div class="col-md-5"><label>Image/Video</label></div>
+				                    <div class="col-md-7">
+                                        <input type="file" name="file" id="file" class="form-control">	
+                                    </div>				                    			                    
+                                </div>
+                                
+                                <div class="col-md-12 form-group">
+                                    <div class="col-md-5"><label>Thumbnail</label></div>
+				                    <div class="col-md-7">
+                                        <input type="file" name="thumbnail" id="thumbnail" class="form-control">	
+                                    </div>				                    			                    
+			                    </div>
+
+                                <div class="col-md-12 form-group">
+                                    <div class="col-md-5"><label>Description</label></div>
+				                    <div class="col-md-7">
+                                    {!! Form::text('description', null, ['class' => 'form-control']) !!}
                                     </div>				                    			                    
 			                    </div>
                                 
@@ -74,6 +88,7 @@
                 <thead>
                     <tr>
                         <th>Type</th>
+                        <th>Description</th>
                         <th>Image</th>
                         <th>Action</th>
                     </tr>
@@ -82,9 +97,15 @@
                     @foreach($images as $image)
                     <tr>
                         <td> {{ $image->type }} </td>
+                        <td> {{ $image->description }} </td>
                         <td> 
                         @if($image->type == 'Video')
-                            {!! Html::image('/images/others/video.jpg','banner',['width' => '100', 'height' => '50']) !!}
+                            <?php $thumbnail = '/images/others/video.jpg'; 
+                                if(isset($image->thumbnail)){
+                                    $thumbnail = '/uploads/home/'.$image->thumbnail;
+                                }
+                            ?>
+                            {!! Html::image($thumbnail,'banner',['width' => '100', 'height' => '50']) !!}
                         @else
                         {!! Html::image('/uploads/home/'.$image->file_name,'banner',['width' => '100px', 'height' => '50']) !!}
                         @endif

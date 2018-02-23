@@ -8,7 +8,7 @@
                     <h1 class="page-header">{{ $page_heading }}</h1>
                 </div>
                 <div class="col-lg-6">
-                       <a href="{{ url('/admin/header_content') }}" class="page-header pull-right"> <button type="View" class="btn btn-default">Back</button></a>
+                       <a href="{{ url('/admin/header_gallery') }}" class="page-header pull-right"> <button type="View" class="btn btn-default">Back</button></a>
                 </div>
                 <!-- /.col-lg-12 -->
            </div>
@@ -44,7 +44,13 @@
                                     </div>
 				                    <div class="col-md-6 col-sm-6 col-xs-6">
                                     @if($images->type == 'Video')
-                                        {!! Html::image('/images/others/video.jpg','banner',['width' => '100', 'height' => '50']) !!}
+                                        <?php $thumbnail = '/images/others/video.jpg'; 
+                                            if(isset($images->thumbnail)){
+                                                $thumbnail = '/uploads/home/'.$images->thumbnail;
+                                            }
+                                        ?>
+                                        
+                                        {!! Html::image($thumbnail,'banner',['width' => '100', 'height' => '50']) !!}
                                     @else
                                         {!! Html::image('/uploads/home/'.$images->file_name,'banner',['width' => '100', 'height' => '50']) !!}
                                     @endif
@@ -52,20 +58,34 @@
                                 </div>  
 
                                 <div class="col-md-12 col-sm-12 col-xs-12 form-group">
-                                    <div class="col-md-6 col-sm-6 col-xs-6">
+                                    <div class="col-md-5 col-sm-5 col-xs-5">
                                         <label>Type</label>
                                     </div>
-				                    <div class="col-md-6 col-sm-6 col-xs-6">
+				                    <div class="col-md-7 col-sm-7 col-xs-7">
                                         {!! Form::select('home_file_type', ['Photo' => 'Photo', 'Video' => 'Video'], $images->type, ['class' => 'form-control']) !!}
                                     </div>				                    			                    
                                 </div>  
 
                                 <div class="col-md-12 col-sm-12 col-xs-12 form-group">
-                                    <div class="col-md-6 col-sm-6 col-xs-6">
+                                    <div class="col-md-5 col-sm-5 col-xs-5">
                                         <label>Update Image/Video</label>
                                     </div>
-				                    <div class="col-md-6 col-sm-6 col-xs-6">
-                                         <input type="file" name="gallery_image" id="file">	
+				                    <div class="col-md-7 col-sm-7 col-xs-7">
+                                         <input type="file" name="gallery_image" id="file" class="form-control">	
+                                    </div>				                    			                    
+                                </div>
+                                
+                                <div class="col-md-12 form-group">
+                                    <div class="col-md-5"><label>Update Thumbnail</label></div>
+				                    <div class="col-md-7">
+                                        <input type="file" name="thumbnail" id="thumbnail" class="form-control">	
+                                    </div>				                    			                    
+			                    </div>
+
+                                <div class="col-md-12 form-group">
+                                    <div class="col-md-5"><label>Description</label></div>
+				                    <div class="col-md-7">
+                                    {!! Form::text('description', $images->description, ['class' => 'form-control']) !!}
                                     </div>				                    			                    
 			                    </div>
 

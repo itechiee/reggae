@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Facilities;
+use App\Home;
+use App\Images;
 
 class HomeController extends Controller
 {
@@ -19,6 +21,13 @@ class HomeController extends Controller
     {
         $data['facilities']['left'] = Facilities::where('Section', 'Left')->get();
         $data['facilities']['right'] = Facilities::where('Section', 'Right')->get();
+        $data['homes_content'] = Home::first();
+        $data['home_video'] = Images::where('type', 'Video')
+                                    ->where('category', 'home')
+                                    ->orderBy('id', 'DESC')->first();
+        $data['home_gallery'] = Images::where('type', 'Photo')
+                                    ->where('category', 'home')
+                                    ->orderBy('id', 'DESC')->limit(3)->get(); 
         return view('home.index', $data);
     }
 

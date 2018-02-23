@@ -574,11 +574,13 @@ class AdminController extends Controller
     public function storeHeaderBanners(Request $request)
     {
         $input = $request->all();
+        // dd($input);
         $validator = Validator::make($request->all(), [
             'title' => 'required|max:200',
             'subtitle' => 'required|max:300',
             'description' => 'required|max:500',
-            'banner_image' => 'required'
+            'banner_image' => 'required',
+            'mobile_banner_image' => 'required'
         ]);
         if ($validator->fails()) {
             return redirect('admin/header_content')
@@ -591,11 +593,22 @@ class AdminController extends Controller
         $home->subtitle = $input['subtitle'];
         $home->description = $input['description'];
 
-        $file = Input::file('banner_image');
-        $destinationPath = public_path(). '/uploads/banner/';
-        $filename = time() . '.' . $file->getClientOriginalExtension();
-        $file->move($destinationPath, $filename);
-        $home->banner_image = $filename;
+        if ($request->file('banner_image')) {
+            $file = Input::file('banner_image');
+            $destinationPath = public_path(). '/uploads/banner/';
+            $filename = rand().time() . '.' . $file->getClientOriginalExtension();
+            $file->move($destinationPath, $filename);
+            $home->banner_image = $filename;
+        }
+
+        if ($request->file('mobile_banner_image')) {
+            $file = Input::file('mobile_banner_image');
+            $destinationPath = public_path(). '/uploads/banner/';
+            $mobile_filename = rand().time() . '.' . $file->getClientOriginalExtension();
+            $file->move($destinationPath, $mobile_filename);
+            $home->mobile_banner_image = $mobile_filename;
+        }
+        
 
         if($home->save()){
             $request->session()->flash('alert-success', 'Home content added successfully!');
@@ -617,10 +630,11 @@ class AdminController extends Controller
         $home->subtitle = $request->subtitle;
         $home->description = $request->description;
         $filename = $home->banner_image;
+        $mobile_filename = $home->mobile_banner_image;
         if ($request->file('banner_image')) {
             $file = Input::file('banner_image');
             $destinationPath = public_path(). '/uploads/banner/';
-            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $filename = rand().time() . '.' . $file->getClientOriginalExtension();
             $file->move($destinationPath, $filename);
             $oldFile = $destinationPath.$home->banner_image;
             if(file_exists($oldFile)){
@@ -628,7 +642,19 @@ class AdminController extends Controller
             }
         }
 
+        if ($request->file('mobile_banner_image')) {
+            $file = Input::file('mobile_banner_image');
+            $destinationPath = public_path(). '/uploads/banner/';
+            $mobile_filename =  time() . '.' . $file->getClientOriginalExtension();
+            $file->move($destinationPath, $mobile_filename);
+            $oldFile = $destinationPath.$home->mobile_banner_image;
+            if(file_exists($oldFile)){
+                @unlink($oldFile);
+            }
+        }
+
         $home->banner_image = $filename;
+        $home->mobile_banner_image = $mobile_filename;
         if($home->save()){
             $request->session()->flash('alert-success', 'Home content updated successfully!');
             return redirect('admin/header_content');
@@ -676,19 +702,28 @@ class AdminController extends Controller
         // }
 
        
-        $fileName = null;
+        $thumbnailFileName = $fileName = null;
 
         if ($request->hasFile('file')) {
             $file = Input::file('file');
             $destinationPath = public_path(). '/uploads/home/';
-            $fileName = time() . '.' . $file->getClientOriginalExtension();
+            $fileName = rand().time() . '.' . $file->getClientOriginalExtension();
             $file->move($destinationPath, $fileName);
+        }
+
+        if ($request->hasFile('thumbnail')) {
+            $file = Input::file('thumbnail');
+            $destinationPath = public_path(). '/uploads/home/';
+            $thumbnailFileName = rand().time() . '.' . $file->getClientOriginalExtension();
+            $file->move($destinationPath, $thumbnailFileName);
         }
 
          $picture = new Images();
          $picture->type =  $input['home_file_type'];
          $picture->file_name = $fileName;
          $picture->category = 'home';
+         $picture->description = $input['description'];
+         $picture->thumbnail = $thumbnailFileName;
 
         if($picture->save()){
             $request->session()->flash('alert-success', 'Gallery added successfully!');
@@ -710,6 +745,7 @@ class AdminController extends Controller
         $images->type = $request->home_file_type;
  
         $filename = $images->file_name;
+        $thumbnailFileName = $images->thumbnail;
         if ($request->file('gallery_image')) {
             $file = Input::file('gallery_image');
             $destinationPath = public_path(). '/uploads/home/';
@@ -721,7 +757,20 @@ class AdminController extends Controller
             }
         }
 
+        if ($request->hasFile('thumbnail')) {
+            $file = Input::file('thumbnail');
+            $destinationPath = public_path(). '/uploads/home/';
+            $thumbnailFileName = rand().time() . '.' . $file->getClientOriginalExtension();
+            $file->move($destinationPath, $thumbnailFileName);
+            $oldThumbnailFile = $destinationPath.$images->thumbnail;
+            if(file_exists($oldThumbnailFile)){
+                @unlink($oldThumbnailFile);
+            }
+        }
+
         $images->file_name = $filename;
+        $images->description = $request->description;
+        $images->thumbnail = $thumbnailFileName;
         if($images->save()){
             $request->session()->flash('alert-success', 'Home gallery updated successfully!');
             return redirect('admin/header_gallery');

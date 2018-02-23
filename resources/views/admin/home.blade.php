@@ -32,13 +32,13 @@
 @if(count($homes) > 0)
     <div class="col-sm-12">
         <div class="row">
-            <table class="table table-bordered">
+            <table class="table table-bordered" id="home_table">
                 <thead>
                     <tr>
                         <th>Title</th>
                         <th>Subtitle</th>
                         <th>Description</th>
-                        <th>Banner</th>
+                        <th class="th_banner">Banner</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -48,7 +48,9 @@
                         <td> {{ $home->title }} </td>
                         <td> {{ $home->subtitle }} </td>
                         <td> {{ $home->description }} </td>
-                        <td> {{ $home->banner_image }} </td>
+                        <td> 
+                            {!! Html::image('/uploads/banner/'.$home->banner_image,'banner',['class' => 'col-md-6 col-sm-2', 'width' => '100px', 'height' => '100px']) !!}
+                        </td>
                         <td> 
                         <div>
                             <a href="{{ url('/admin/header_content/edit').'/'.$home->id }}"><i class="fa fa-edit"></i> Edit </a> 
@@ -120,3 +122,6 @@
         </div>
 @stop
 
+<style>
+    #home_table .th_banner{width:25%;}
+</style>

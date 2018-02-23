@@ -432,7 +432,7 @@ class AdminController extends Controller
     public function headerGallery()
     {
         $data['page_heading'] = 'Home Gallery';
-        $data['homes'] = Home::orderBy('id','desc')->get();
+        $data['images'] = Images::where('category','home')->get();
         return view('admin.home_gallery', $data);
     }
 
@@ -456,14 +456,15 @@ class AdminController extends Controller
 
        
         $fileName = null;
-        if ($request->has('file')) {  dd($request->all());
+
+        if ($request->hasFile('file')) {
             $file = Input::file('file');
             $destinationPath = public_path(). '/uploads/home/';
-            $filename = time() . '.' . $file->getClientOriginalExtension();
-            $file->move($destinationPath, $filename);
+            $fileName = time() . '.' . $file->getClientOriginalExtension();
+            $file->move($destinationPath, $fileName);
         }
-dd('yy');
-         $picture = new images();
+
+         $picture = new Images();
          $picture->type =  $input['home_file_type'];
          $picture->file_name = $fileName;
          $picture->category = 'home';
@@ -473,5 +474,51 @@ dd('yy');
             return redirect('admin/header_gallery');
         }
         
+    }
+
+    public function editHeaderGallery($imageId)
+    {
+        $data['page_heading'] = 'Header';
+        $data['images'] = Images::where('id', $imageId)->first();
+        return view('admin.edit_home_gallery', $data);
+    }
+
+    public function updateHeaderGallery(Request $request)
+    {
+        $images = Images::find($request->id);
+        $images->type = $request->home_file_type;
+ 
+        $filename = $images->file_name;
+        if ($request->file('gallery_image')) {
+            $file = Input::file('gallery_image');
+            $destinationPath = public_path(). '/uploads/home/';
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->move($destinationPath, $filename);
+            $oldFile = $destinationPath.$images->file_name;
+            if(file_exists($oldFile)){
+                @unlink($oldFile);
+            }
+        }
+
+        $images->file_name = $filename;
+        if($images->save()){
+            $request->session()->flash('alert-success', 'Home gallery updated successfully!');
+            return redirect('admin/header_gallery');
+        }
+    }
+    
+    public function deleteHeaderGallery($imageId)
+    {
+        $images = Images::find($imageId);
+        if(count($images) > 0) {
+            $images->delete();
+            $destinationPath = public_path(). '/uploads/home/';
+            $oldFile = $destinationPath.$images->file_name;
+            if(file_exists($oldFile)){
+                @unlink($oldFile);
+            }
+            \Session::flash('alert-info', 'Home gallery deleted successfully!');            
+        }
+        return redirect('admin/header_gallery');
     }
 }

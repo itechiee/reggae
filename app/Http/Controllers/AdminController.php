@@ -243,10 +243,18 @@ class AdminController extends Controller
         $data['page_heading'] = 'Roof Top';
         $input = $request->all();
 
-        $validator = Validator::make($request->all(), [
-            'rooftop_type' => 'required',
-            'file' => 'required',
-        ]);
+        if('rooftop_type' == 'Photo'){
+            $validator = Validator::make($request->all(), [
+                'rooftop_type' => 'required',
+                'file' => 'required',
+            ]);
+
+        }else{
+            $validator = Validator::make($request->all(), [
+                'rooftop_type' => 'required',
+                'file' => 'required|max:500000',
+            ]);
+        }
 
         if ($validator->fails()) {
             return redirect('admin/rooftop')
@@ -375,7 +383,7 @@ class AdminController extends Controller
                         ->withInput();
         }
         $room = Rooms::find($input['id']);
-        
+
         $filename = $room->image;
         
             if ($request->file('file')) {

@@ -252,7 +252,7 @@ class AdminController extends Controller
         }else{
             $validator = Validator::make($request->all(), [
                 'rooftop_type' => 'required',
-                'file' => 'required|max:500000',
+                'file' => 'required|max:50000',
             ]);
         }
 
@@ -264,7 +264,7 @@ class AdminController extends Controller
 
         $fileName = null;
         if (request()->hasFile('file')) {
-            $file = $request()->file('file');
+            $file = Input::file('file');
             $file_type = $file->getClientOriginalExtension();
             $fileName = md5($file->getClientOriginalName() . time()) . "." . $file->getClientOriginalExtension();
             $file->move('../storage/app/uploads/', $fileName);    

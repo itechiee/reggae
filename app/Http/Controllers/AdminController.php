@@ -36,6 +36,7 @@ class AdminController extends Controller
         $data['roomCount'] = rooms::count();
         $data['roofTopCount'] = images::count();
         $data['contentsCount'] = contents::count();
+        $data['cafeCount'] = cafe::count();
         
         return view('admin.dashboard', $data);
        

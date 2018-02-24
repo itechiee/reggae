@@ -50,7 +50,6 @@
 				                    	 <select class="form-control" name="type">
                                           <option value="about_us">About Us</option>
                                           <option value="contact">Contact</option>
-                                          <option value="cafe">Cafe</option>
                                         </select> 
                                     </div>				                    			                    
 			                    </div>

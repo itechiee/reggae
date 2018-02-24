@@ -29,11 +29,9 @@
                     @endforeach
                 </div>
             <div class="col-sm-12">
-                    <h3>Contents</h3>
                     <table id="rooms_list" class="table table-striped table-bordered" cellspacing="0" width="100%">
                         <thead>
                             <tr>
-                                <th>Name</th>
                                 <th>Description</th>
                                 <th>Action</th>
                             </tr>
@@ -42,7 +40,6 @@
                             @if(count($contents) >0)
                                  @foreach($contents as $content)
                                  <tr>
-                                    <td>{{$content->name}}</td>
                                     <td>{{$content->description}}</td>
                                     <td>
                                         <div>
@@ -54,7 +51,7 @@
                                  </tr>
                                 @endforeach
                             @else
-                                <tr><td colspan="3">No Results</td></tr>
+                                <tr><td colspan="2">No Results</td></tr>
                             @endif
                         </tbody>
                     </table>    

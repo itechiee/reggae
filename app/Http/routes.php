@@ -39,6 +39,13 @@ Route::get('admin/rooftop/edit/{id}', 'AdminController@editRooftop');
 Route::post('admin/rooftop/update', 'AdminController@updateRooftop');
 Route::get('admin/rooftop/delete/{id}', 'AdminController@deleteRooftop');
 
+Route::get('admin/cafe', 'AdminController@createCafe');
+Route::post('admin/cafe/store', 'AdminController@storeCafe');
+Route::get('admin/cafe/view_cafe_details', 'AdminController@viewCafe');
+Route::get('admin/cafe/edit/{id}', 'AdminController@editCafe');
+Route::post('admin/cafe/update', 'AdminController@updateCafe');
+Route::get('admin/cafe/delete/{id}', 'AdminController@deleteCafe');
+
 Route::get('admin/contents', 'AdminController@createContents');
 Route::post('admin/contents/store', 'AdminController@storeContents');
 Route::get('admin/contents/view_content_details', 'AdminController@viewContents');

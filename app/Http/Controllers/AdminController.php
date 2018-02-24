@@ -165,7 +165,6 @@ class AdminController extends Controller
         $input = $request->all();
 
         $validator = Validator::make($request->all(), [
-            'type' => 'required',
             'description' => 'required',
         ]);
 
@@ -177,7 +176,6 @@ class AdminController extends Controller
         }
 
         $contents = new contents();
-        $contents->name = $input['type'];
         $contents->description = $input['description'];
 
         if($contents->save()){
@@ -266,7 +264,7 @@ class AdminController extends Controller
      */
     public function viewContents()
     {
-        $data['page_heading'] = 'List Contents';
+        $data['page_heading'] = 'About Us';
         $data['contents'] = contents::all();
         return view('admin.view_contents', $data);
     }
@@ -626,7 +624,7 @@ class AdminController extends Controller
      */
     public function editContent($id)
     {
-        $data['page_heading'] = 'Edit Content';
+        $data['page_heading'] = 'Edit About Us';
         $data['content'] = contents::find($id);
         return view('admin.edit_content', $data);
     }
@@ -638,16 +636,15 @@ class AdminController extends Controller
      */
     public function updateContent(Request $request)
     {
-        $data['page_heading'] = 'Update Content';
+        $data['page_heading'] = 'Update About Us';
         
         $input = $request->all();
 
         $content = contents::find($input['id']);
-        $content->name = $input['type'];
         $content->description = $input['description'];
 
         if($content->save()){
-            $request->session()->flash('alert-success', 'Content updated successfully!');
+            $request->session()->flash('alert-success', 'About Us updated successfully!');
             return redirect('admin/contents/view_contents_details');
         }
         
@@ -663,7 +660,7 @@ class AdminController extends Controller
         $contents = contents::find($Id);
         if(count($contents) > 0) {
             $contents->delete();
-            \Session::flash('alert-info', 'Content deleted successfully!');            
+            \Session::flash('alert-info', 'About Us deleted successfully!');            
         }
         return redirect('admin/contents/view_contents_details');
     }

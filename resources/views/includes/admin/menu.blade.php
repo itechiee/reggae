@@ -77,8 +77,8 @@
                          <li {{ (Request::is('*cafe') ? 'class="active"' : '') }}>
                             <a href="{{ url ('admin/cafe') }}"><i class="fa fa-edit fa-fw"></i> Cafe</a>
                         </li>
-                         <li {{ (Request::is('*rooftop') ? 'class="active"' : '') }}>
-                            <a href="{{ url ('admin/contents') }}"><i class="fa fa-edit fa-fw"></i> Contents</a>
+                         <li {{ (Request::is('*aboutUs') ? 'class="active"' : '') }}>
+                            <a href="{{ url ('admin/contents') }}"><i class="fa fa-edit fa-fw"></i> About Us</a>
                         </li>
                         
                     </ul>

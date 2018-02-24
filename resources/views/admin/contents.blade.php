@@ -33,16 +33,6 @@
                         <div class="col-lg-6">
                             <form role="form" method="POST" action="{{ url('/admin/contents/store') }}">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                               
-                                <div class="col-md-12 form-group">
-                                    <div class="col-md-6"><label>Type</label></div>
-                                    <div class="col-md-6">
-                                        <select class="form-control" name="type">
-                                          <option value="about_us">About Us</option>
-                                          <option value="contact">Contact</option>
-                                        </select> 
-                                    </div>                                                                
-                                </div> 
 
                                 <div class="col-md-12 form-group">
                                     <div class="col-md-6"> <label>Description</label></div>

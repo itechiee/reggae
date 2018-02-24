@@ -111,7 +111,7 @@
                                 </div>
                                 <div class="col-xs-9 text-right">
                                     <div class="huge">{{ $contentsCount }}</div>
-                                    <div>CONTENTS!</div>
+                                    <div>ABOUT US!</div>
                                 </div>
                             </div>
                         </div>

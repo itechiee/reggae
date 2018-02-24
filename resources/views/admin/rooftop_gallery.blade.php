@@ -32,32 +32,97 @@
                 <div class="col-sm-12">
                     <div class="row" >
                         <div class="col-lg-6">
-                          
                             <form action="{{ url('/admin/rooftop/store') }}" method="POST" enctype="multipart/form-data">
-                            	<input type="hidden" value="{{ csrf_token() }}" name="_token">
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                
                                 <div class="col-md-12 form-group">
-                                    <div class="col-md-6"><label>Type</label></div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-5"><label>Type</label></div>
+				                    <div class="col-md-7">
                                         <select class="form-control" name="rooftop_type">
-                                            <option value="Video">Video</option>
                                             <option value="Photo">Photo</option>
-                                        </select> 
-                                    </div>                                                                
-                                </div> 
-                                <div class="col-md-12 form-group">
-                                    <div class="col-md-6"><label>Select image to upload:</label></div>
-                                    <div class="col-md-6">
-                                         <input type="file" name="file" id="file">  
-                                    </div>                                                                  
-                                </div>
+                                            <option value="Video">Video</option>                                            
+                                        </select>
+                                    </div>				                    			                    
+			                    </div>
 
-			                    <input type="submit" class="btn btn-primary" value="Upload" name="submit">
-			                    <button type="reset" class="btn btn-default">Reset</button>
-			                </form>
-                        </div>
-                        
+                                <div class="col-md-12 form-group">
+                                    <div class="col-md-5"><label>Image/Video</label></div>
+				                    <div class="col-md-7">
+                                        <input type="file" name="file" id="file" class="form-control">	
+                                    </div>				                    			                    
+                                </div>
+                                
+                                <div class="col-md-12 form-group">
+                                    <div class="col-md-5"><label>Thumbnail</label></div>
+				                    <div class="col-md-7">
+                                        <input type="file" name="thumbnail" id="thumbnail" class="form-control">	
+                                    </div>				                    			                    
+			                    </div>
+
+                                <div class="col-md-12 form-group">
+                                    <div class="col-md-5"><label>Description</label></div>
+				                    <div class="col-md-7">
+                                    {!! Form::text('description', null, ['class' => 'form-control']) !!}
+                                    </div>				                    			                    
+			                    </div>
+                                
+                                <div class="col-md-12 form-group">
+                                    <div class="col-md-12">
+                                        <button type="submit" class="btn btn-primary">Submit Button</button>
+                                        <button type="reset" class="btn btn-default">Reset Button</button>
+                                    </div>	                    			                    
+			                    </div>                                                           
+                            </form>
+                        </div>                        
                     </div>
                 </div>
+
+                <hr class="divider"></hr>
+
+                
+@if(count($rooftop) > 0)
+    <div class="col-sm-12">
+        <div class="row">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Image</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($rooftop as $image)
+                    <tr>
+                        <td> {{ $image->type }} </td>
+                        <td> {{ $image->description }} </td>
+                        <td> 
+                        @if($image->type == 'Video')
+                            <?php $thumbnail = '/images/others/video.jpg'; 
+                                if(isset($image->thumbnail)){
+                                    $thumbnail = '/uploads/home/'.$image->thumbnail;
+                                }
+                            ?>
+                            {!! Html::image($thumbnail,'banner',['width' => '100', 'height' => '50']) !!}
+                        @else
+                        {!! Html::image('/uploads/home/'.$image->file_name,'banner',['width' => '100px', 'height' => '50']) !!}
+                        @endif
+                        </td>
+                        <td> 
+                        <div>
+                            <a href="{{ url('/admin/rooftop/edit').'/'.$image->id }}"><i class="fa fa-edit"></i> Edit </a> 
+                        /
+                            <a href="{{ url('/admin/rooftop/delete').'/'.$image->id }}"><i class="glyphicon glyphicon-remove"></i> Delete </a> </td>
+                        </div>
+                    </tr>
+                    @endforeach()
+                </tbody>
+            </table>	
+        </div>
+    </div>
+
+@endif
             </div>
             
 		</div>

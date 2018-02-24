@@ -13,6 +13,7 @@
 	<meta content="Reggae Mansion" name="author"/>
 
 	<link rel="stylesheet" href="{{ asset("admin/assets/stylesheets/styles.css") }}" />
+	<link rel="stylesheet" href="{{ asset("admin/assets/stylesheets/custom.css") }}" />
 </head>
 <body>
     <div id="wrapper">

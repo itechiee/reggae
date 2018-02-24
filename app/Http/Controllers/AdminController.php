@@ -228,7 +228,7 @@ class AdminController extends Controller
     {
       
         $data['page_heading'] = 'Roof Top';
-        $data['roomsLists'] = rooms::all();
+        $data['rooftop'] = Images::where('category', 'rooftop')->get();
 
         return view('admin.rooftop_gallery', $data);
     }
@@ -261,23 +261,34 @@ class AdminController extends Controller
                         ->withErrors($validator)
                         ->withInput();
         }
+        
 
-        $fileName = null;
-        if (request()->hasFile('file')) {
+        $thumbnailFileName = $fileName = null;
+
+        if ($request->hasFile('file')) {
             $file = Input::file('file');
-            $file_type = $file->getClientOriginalExtension();
-            $fileName = md5($file->getClientOriginalName() . time()) . "." . $file->getClientOriginalExtension();
-            $file->move('../storage/app/uploads/', $fileName);    
+            $destinationPath = public_path(). '/uploads/rooftop/';
+            $fileName = rand().time() . '.' . $file->getClientOriginalExtension();
+            $file->move($destinationPath, $fileName);
+        }
+
+        if ($request->hasFile('thumbnail')) {
+            $file = Input::file('thumbnail');
+            $destinationPath = public_path(). '/uploads/rooftop/';
+            $thumbnailFileName = rand().time() . '.' . $file->getClientOriginalExtension();
+            $file->move($destinationPath, $thumbnailFileName);
         }
 
          $picture = new images();
          $picture->type =  $input['rooftop_type'];
          $picture->file_name = $fileName;
-         $picture->file_type = $file_type;
+         $picture->category = 'rooftop';
+         $picture->thumbnail = $thumbnailFileName;
+         $picture->description = $input['description'];
 
         if($picture->save()){
-            $request->session()->flash('alert-success', 'Gallery was successful added!');
-            return view('admin.rooftop_gallery', $data);
+            $request->session()->flash('alert-success', 'Gallery added successfully!');
+            return redirect('admin/rooftop');
         }
         
     }
@@ -292,6 +303,16 @@ class AdminController extends Controller
         $data['rooftopList'] = images::all();
         return view('admin.view_rooftop', $data);
     }
+
+    
+    public function editRooftop($imageId)
+    {
+        $data['page_heading'] = 'Header';
+        $data['rooftop'] = Images::where('id', $imageId)->first();
+        return view('admin.edit_rooftop', $data);
+    }
+
+
     /**
      * Edit facility.
      *
@@ -426,12 +447,10 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function editRooftop($id)
-    {
-        $data['page_heading'] = 'Edit Rooftop';
-        $data['rooftop'] = images::find($id);
-        return view('admin.edit_rooftop', $data);
-    }
+    // public function editRooftop($id)
+    // {
+    //     //
+    // }
     /**
      * Update Rooftop.
      *

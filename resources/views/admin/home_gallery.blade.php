@@ -112,7 +112,3 @@
             <!-- /#page-wrapper -->
         </div>
 @stop
-
-<style>
-    .divider{width:100%;  border: 1px solid #eee;}
-</style>

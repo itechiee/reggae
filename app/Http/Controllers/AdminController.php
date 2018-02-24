@@ -20,6 +20,7 @@ use Image;
 use App\Images;
 use App\Contents;
 use App\Home;
+use App\Cafe;
 
 class AdminController extends Controller
 {
@@ -184,6 +185,78 @@ class AdminController extends Controller
         }
         
     }
+
+    /**
+     * Create Rooms
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function createCafe()
+    {
+      
+        $data['page_heading'] = 'Cafe';
+        // $data['roomsLists'] = rooms::all();
+        return view('admin.cafe', $data);
+    }
+
+    /**
+     * Store store rooms
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function storeCafe(Request $request)
+    {
+        $data['page_heading'] = 'Rooms';
+        $input = $request->all();
+
+        $validator = Validator::make($request->all(), [
+            'workdays' => 'required|max:50',
+            'work_time' => 'required|numeric',
+            'work_time' => 'required',
+            'description' =>'required',
+            'file'=>'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('admin/cafe')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+        
+        $filename = null;
+        if (request()->hasFile('file')) {
+            $file = Input::file('file');
+            $destinationPath = public_path(). '/uploads/banner/';
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->move($destinationPath, $filename);   
+        }
+
+        $cafe = new cafe();
+        $cafe->work_days = $input['workdays'];
+        $cafe->work_time = $input['work_time'];
+        $cafe->phone = $input['phone'];
+        $cafe->description = $input['description'];
+        $cafe->cafe_image = $filename;
+
+        if($cafe->save()){
+            $request->session()->flash('alert-success', 'Cafe added successfully!');
+            return redirect('admin/cafe');
+        }
+        
+    }
+
+     /**
+     * View Cafe- Fetch afe details from DB
+     *
+     * @return array
+     */
+    public function viewCafe()
+    {
+        $data['page_heading'] = 'List Cafe';
+        $data['cafeLists'] = cafe::all();
+        return view('admin.view_cafe_details', $data);
+    }
+
 
      /**
      * View contents- Fetch room details from DB
@@ -592,6 +665,69 @@ class AdminController extends Controller
             \Session::flash('alert-info', 'Content deleted successfully!');            
         }
         return redirect('admin/contents/view_contents_details');
+    }
+
+    /**
+     * Edit Cafe.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function editCafe($id)
+    {
+        $data['page_heading'] = 'Edit Cafe';
+        $data['cafe'] = cafe::find($id);
+        return view('admin.edit_cafe', $data);
+    }
+    /**
+     * Update Cafe.
+     *
+     * @param  Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateCafe(Request $request)
+    {
+        $data['page_heading'] = 'Update Cafe';
+        
+        $input = $request->all();
+        $cafe = cafe::find($input['id']);
+
+            if ($request->file('file')) {
+                $file = Input::file('file');
+                $destinationPath = public_path(). '/uploads/banner/';
+                $filename = time() . '.' . $file->getClientOriginalExtension();
+                $extension = $file->getClientOriginalExtension();
+                $file->move($destinationPath, $filename);
+            }
+
+        $cafe->work_days  = $input['workdays'];
+        $cafe->work_time = $input['work_time'];
+        $cafe->phone = $input['phone'];
+        $cafe->description = $input['description'];
+        $cafe->type = $extension;
+        $cafe->cafe_image = $filename;
+
+
+        if($cafe->save()){
+            $request->session()->flash('alert-success', 'Cafe updated successfully!');
+            return redirect('admin/cafe/view_cafe_details');
+        }
+        
+    }
+    /**
+     * Delete Content.
+     *
+     * @param  int  $Id
+     * @return \Illuminate\Http\Response
+     */
+     public function deleteCafe($Id)
+    {
+        $cafe = cafe::find($Id);
+        if(count($cafe) > 0) {
+            $cafe->delete();
+            \Session::flash('alert-info', 'Cafe deleted successfully!');            
+        }
+        return redirect('admin/cafe/view_cafe_details');
     }
 
     /**

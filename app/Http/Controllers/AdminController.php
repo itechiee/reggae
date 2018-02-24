@@ -89,8 +89,7 @@ class AdminController extends Controller
     {
       
         $data['page_heading'] = 'Rooms';
-        $data['roomsLists'] = rooms::all();
-
+        // $data['roomsLists'] = rooms::all();
         return view('admin.rooms', $data);
     }
 
@@ -128,12 +127,14 @@ class AdminController extends Controller
         $rooms = new rooms();
         $rooms->room_name = $input['room_name'];
         $rooms->price = $input['room_price'];
+        $rooms->price_text = $input['price_text'];
         $rooms->room_description = $input['room_description'];
+        $rooms->short_description = $input['short_description'];
         $rooms->image = $filename;
 
         if($rooms->save()){
-            $request->session()->flash('alert-success', 'Room was successful added!');
-            return view('admin.rooms', $data);
+            $request->session()->flash('alert-success', 'Room added successfully!');
+            return redirect('admin/rooms');
         }
         
     }
@@ -228,7 +229,7 @@ class AdminController extends Controller
     {
       
         $data['page_heading'] = 'Roof Top';
-        $data['rooftop'] = Images::where('category', 'rooftop')->get();
+        $data['rooftop'] = Images::where('category', 'rooftop')->orderBy('id', 'Desc')->get();
 
         return view('admin.rooftop_gallery', $data);
     }
@@ -240,10 +241,10 @@ class AdminController extends Controller
      */
     public function storeRooftop(Request $request)
     {
-        $data['page_heading'] = 'Roof Top';
+        $data['page_heading'] = 'RoofTop';
         $input = $request->all();
 
-        if('rooftop_type' == 'Photo'){
+        if($input['rooftop_type'] == 'Photo'){
             $validator = Validator::make($request->all(), [
                 'rooftop_type' => 'required',
                 'file' => 'required',
@@ -261,10 +262,33 @@ class AdminController extends Controller
                         ->withErrors($validator)
                         ->withInput();
         }
-        
+
+        $valid = true;
+        if($input['rooftop_type'] == 'Photo'){
+            $roofTopCount = Images::where('category', 'rooftop')->where('type', 'Photo')->count();
+            if($roofTopCount >= 14) {
+                $valid = false;
+                $errorMsg = 'Maximum 14 photos only allowed';
+            }
+        } else {
+            $roofTopCount = Images::where('category', 'rooftop')->where('type', 'Video')->count();
+            if($roofTopCount >= 1) {
+                $valid = false;
+                $errorMsg = 'Maximum 1 video only allowed';
+            }
+        }
+
+        if(!$valid){
+            return redirect('admin/rooftop')
+                            ->withErrors($errorMsg)
+                            ->withInput();
+        }
+
+        $picture = new Images();
+        $picture->type =  $input['rooftop_type'];        
+        $picture->category = 'rooftop';
 
         $thumbnailFileName = $fileName = null;
-
         if ($request->hasFile('file')) {
             $file = Input::file('file');
             $destinationPath = public_path(). '/uploads/rooftop/';
@@ -277,14 +301,11 @@ class AdminController extends Controller
             $destinationPath = public_path(). '/uploads/rooftop/';
             $thumbnailFileName = rand().time() . '.' . $file->getClientOriginalExtension();
             $file->move($destinationPath, $thumbnailFileName);
+            $picture->thumbnail = $thumbnailFileName;
         }
 
-         $picture = new images();
-         $picture->type =  $input['rooftop_type'];
-         $picture->file_name = $fileName;
-         $picture->category = 'rooftop';
-         $picture->thumbnail = $thumbnailFileName;
-         $picture->description = $input['description'];
+        $picture->file_name = $fileName;         
+        $picture->description = $input['description'];
 
         if($picture->save()){
             $request->session()->flash('alert-success', 'Gallery added successfully!');
@@ -307,7 +328,7 @@ class AdminController extends Controller
     
     public function editRooftop($imageId)
     {
-        $data['page_heading'] = 'Header';
+        $data['page_heading'] = 'RoofTop';
         $data['rooftop'] = Images::where('id', $imageId)->first();
         return view('admin.edit_rooftop', $data);
     }
@@ -417,6 +438,8 @@ class AdminController extends Controller
         $room->room_name = $input['room_name'];
         $room->price = $input['price'];
         $room->room_description = $input['room_description'];
+        $room->short_description = $input['short_description'];
+        $room->price_text = $input['price_text'];
         $room->image = $filename;
         
         if($room->save()){
@@ -436,6 +459,12 @@ class AdminController extends Controller
     {
         $room = rooms::find($Id);
         if(count($room) > 0) {
+            $destinationPath = public_path(). '/uploads/rooms/';
+            $oldFile = $destinationPath.$room->image;
+            if(file_exists($oldFile)){
+                @unlink($oldFile);
+            }
+
             $room->delete();
             \Session::flash('alert-info', 'Room deleted successfully!');            
         }
@@ -459,14 +488,13 @@ class AdminController extends Controller
      */
     public function updateRooftop(Request $request)
     {
-        $data['page_heading'] = 'Update Rooftop';
-        
-        $input = $request->all();
-        
+        $data['page_heading'] = 'Update Rooftop';        
+        $input = $request->all();        
         $rooftop = images::find($input['id']);
         $rooftop->type = $input['rooftop_type'];
 
         $filename = $rooftop->file_name;
+        $thumbnailFileName = $rooftop->thumbnail;
         
             if ($request->file('file')) {
                 $file = Input::file('file');
@@ -480,13 +508,25 @@ class AdminController extends Controller
                     }
                 }
             }
+            if ($request->hasFile('thumbnail')) {
+                $file = Input::file('thumbnail');
+                $destinationPath = public_path(). '/uploads/rooftop/';
+                $thumbnailFileName = rand().time() . '.' . $file->getClientOriginalExtension();
+                $file->move($destinationPath, $thumbnailFileName);
+                $oldThumbnailFile = $destinationPath.$rooftop->thumbnail;
+                if(file_exists($oldThumbnailFile)){
+                    @unlink($oldThumbnailFile);
+                }
+            }
         
 
         $rooftop->file_name = $filename;
+        $rooftop->thumbnail = $thumbnailFileName;
+        $rooftop->description = $input['description'];
 
         if($rooftop->save()){
-            $request->session()->flash('alert-success', 'Facility updated successfully!');
-            return redirect('admin/rooftop/view_rooftop_details');
+            $request->session()->flash('alert-success', 'Rooftop updated successfully!');
+            return redirect('admin/rooftop');
         }
     }
     /**
@@ -495,14 +535,14 @@ class AdminController extends Controller
      * @param  int  $Id
      * @return \Illuminate\Http\Response
      */
-     public function deleteRooftop($Id)
+    public function deleteRooftop($Id)
     {
-        $facility = facilities::find($Id);
-        if(count($facility) > 0) {
-            $facility->delete();
-            \Session::flash('alert-info', 'Facility deleted successfully!');            
+        $rooftop = Images::find($Id);
+        if(count($rooftop) > 0) {
+            $rooftop->delete();
+            \Session::flash('alert-info', 'Rooftop image/video deleted successfully!');            
         }
-        return redirect('admin/facilities/view_facility_details');
+        return redirect('admin/rooftop');
     }
     /**
      * Edit Content.
@@ -664,13 +704,13 @@ class AdminController extends Controller
     public function deleteHeaderBanners($homeId)
     {
         $home = Home::find($homeId);
-        if(count($home) > 0) {
-            $home->delete();
+        if(count($home) > 0) {            
             $destinationPath = public_path(). '/uploads/banner/';
             $oldFile = $destinationPath.$home->banner_image;
             if(file_exists($oldFile)){
                 @unlink($oldFile);
             }
+            $home->delete();
             \Session::flash('alert-info', 'Home content deleted successfully!');            
         }
         return redirect('admin/header_content');
@@ -780,13 +820,13 @@ class AdminController extends Controller
     public function deleteHeaderGallery($imageId)
     {
         $images = Images::find($imageId);
-        if(count($images) > 0) {
-            $images->delete();
+        if(count($images) > 0) {            
             $destinationPath = public_path(). '/uploads/home/';
             $oldFile = $destinationPath.$images->file_name;
             if(file_exists($oldFile)){
                 @unlink($oldFile);
             }
+            $images->delete();
             \Session::flash('alert-info', 'Home gallery deleted successfully!');            
         }
         return redirect('admin/header_gallery');

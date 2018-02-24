@@ -45,7 +45,7 @@
                                  <tr>
                                     <td>{{$room->room_name}}</td>
                                     <td>{{$room->price}}</td>
-                                    <td>{{$room->room_description}}</td>
+                                    <td>{{$room->short_description}}</td>
                                     <td>
                                       {!! Html::image('/uploads/rooms/'.$room->image,'image',['class' => 'col-md-4 col-sm-2']) !!}
                                     </td>

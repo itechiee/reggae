@@ -36,53 +36,57 @@
                         {!! Form::open(['url' => 'admin/rooftop/update', 'method' => 'post' , 'enctype' => 'multipart/form-data']) !!}
                         {!! Form::hidden('id', $rooftop->id, ['class' => 'form-control', 'id' => 'rooftopId']) !!}
                               
-                                <div class="col-md-12 col-sm-12 col-xs-12 form-group">
-                                    <div class="col-md-6 col-sm-6 col-xs-6"><label>rooftop_type</label></div>
-				                    <div class="col-md-6 col-sm-6 col-xs-6">
-				                    	<select class="form-control" name="rooftop_type">
-				                    		<?php $style = ''; ?>
-				                    		@if($rooftop->type == 'Photo')
-				                    			<?php $style = ' selected="selected"'; ?>
-				                    		@elseif($rooftop->type == 'Video')
-				                    			<?php $style = ' selected="selected"'; ?>
-				                    		@endif
-	                                        <option <?php echo $style ;?> value="Video">Video</option>
-	                                        <option <?php echo $style ;?> value="Photo">Photo</option>
-                                    	</select>
-                                    </div>				                    			                    
-			                    </div>
 
-			                    @if($rooftop->type == 'Photo')
-				                    <div class="col-md-12 col-sm-12 col-xs-12 form-group">
-	                                    <div class="col-md-6 col-sm-6 col-xs-6">
-	                                        <label>Current Image</label>
-	                                    </div>
-					                    <div class="col-md-6 col-sm-6 col-xs-6">
-	                                    {!! Html::image('/uploads/rooftop/'.$rooftop->file_name,'image',['class' => 'col-md-6 col-sm-2', 'width' => '100']) !!}
-	                                    </div>				                    			                    
-	                                </div> 
-
-	                            @else
-
-	                            	<div class="col-md-12 col-sm-12 col-xs-12 form-group">
-	                                    <div class="col-md-6 col-sm-6 col-xs-6">
-	                                        <label>Current Video</label>
-	                                    </div>
-					                    <div class="col-md-6 col-sm-6 col-xs-6">
-	                                    <embed src="{{ asset('../storage/app/uploads/'.$rooftop->file_name) }}">
-	                                    </div>				                    			                    
-	                                </div> 
-
-								@endif
-
-                                <div class="col-md-12 col-sm-12 col-xs-12 form-group">
+                        <div class="col-md-12 col-sm-12 col-xs-12 form-group">
                                     <div class="col-md-6 col-sm-6 col-xs-6">
-                                        <label>Update</label>
+                                        <label>Current Banner Video</label>
                                     </div>
 				                    <div class="col-md-6 col-sm-6 col-xs-6">
-                                         <input type="file" name="file" id="file">	
+                                    @if($rooftop->type == 'Video')
+                                        <?php $thumbnail = '/images/others/video.jpg'; 
+                                            if(isset($rooftop->thumbnail)){
+                                                $thumbnail = '/uploads/rooftop/'.$rooftop->thumbnail;
+                                            }
+                                        ?>
+                                        
+                                        {!! Html::image($thumbnail,'banner',['width' => '100', 'height' => '50']) !!}
+                                    @else
+                                        {!! Html::image('/uploads/rooftop/'.$rooftop->file_name,'banner',['width' => '100', 'height' => '50']) !!}
+                                    @endif
                                     </div>				                    			                    
-			                    </div>
+                                </div>  
+
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group">
+                                    <div class="col-md-5 col-sm-5 col-xs-5">
+                                        <label>Type</label>
+                                    </div>
+				                    <div class="col-md-7 col-sm-7 col-xs-7">
+                                        {!! Form::select('rooftop_type', ['Photo' => 'Photo', 'Video' => 'Video'], $rooftop->type, ['class' => 'form-control']) !!}
+                                    </div>				                    			                    
+                                </div>  
+
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group">
+                                    <div class="col-md-5 col-sm-5 col-xs-5">
+                                        <label>Update Image/Video</label>
+                                    </div>
+				                    <div class="col-md-7 col-sm-7 col-xs-7">
+                                         <input type="file" name="file" id="file" class="form-control">	
+                                    </div>				                    			                    
+                                </div>
+                                
+                                <div class="col-md-12 form-group">
+                                    <div class="col-md-5"><label>Update Thumbnail</label></div>
+				                    <div class="col-md-7">
+                                        <input type="file" name="thumbnail" id="thumbnail" class="form-control">	
+                                    </div>				                    			                    
+                                </div>
+                                
+                                <div class="col-md-12 form-group">
+                                    <div class="col-md-5"><label>Description</label></div>
+				                    <div class="col-md-7">
+                                        {!! Form::text('description', $rooftop->description, ['class' => 'form-control']) !!}
+                                    </div>				                    			                    
+                                </div>
 			                    
                                 <div class="col-md-12 col-sm-12 col-xs-12 form-group">
                                     <div class="col-md-12">

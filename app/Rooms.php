@@ -9,6 +9,6 @@ class Rooms extends Model
 {
 
     protected $table = 'rooms';
-    protected $fillable = ['room_name', 'price','room_description','created_at','updated_at'];
+    protected $fillable = ['room_name', 'price','room_description', 'short_description', 'price_text', 'created_at','updated_at'];
 
 }

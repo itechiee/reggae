@@ -49,6 +49,20 @@
                                         {!! Form::text('price', $room->price, ['class' => 'form-control', 'id' => 'price']) !!}
                                     </div>				                    			                    
 			                    </div>
+
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group">
+                                    <div class="col-md-6 col-sm-6 col-xs-6"><label>Price Text</label></div>
+				                    <div class="col-md-6 col-sm-6 col-xs-6">
+                                        {!! Form::text('price_text', $room->price_text, ['class' => 'form-control', 'id' => 'price']) !!}
+                                    </div>				                    			                    
+			                    </div>
+
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group">
+                                    <div class="col-md-6 col-sm-6 col-xs-6"><label>Short Description</label></div>
+				                    <div class="col-md-6 col-sm-6 col-xs-6">
+                                        {!! Form::textarea('short_description', $room->short_description, ['class' => 'form-control', 'id' => 'short_description', 'rows' => 4, 'cols' =>50]) !!}	
+                                    </div>				                    			                    
+			                    </div>
 			                    
 			                    <div class="col-md-12 col-sm-12 col-xs-12 form-group">
                                     <div class="col-md-6 col-sm-6 col-xs-6"><label>Description</label></div>

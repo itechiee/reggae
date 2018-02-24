@@ -47,10 +47,25 @@
                                          <input class="form-control" name="room_price"> 
                                     </div>                                                                
                                 </div> 
+
+                                <div class="col-md-12 form-group">
+                                    <div class="col-md-6"><label>Price Text</label></div>
+                                    <div class="col-md-6">
+                                         <input class="form-control" name="price_text"> 
+                                    </div>                                                                
+                                </div>
+
+                                <div class="col-md-12 form-group">
+                                    <div class="col-md-6"><label>Short Description</label></div>
+                                    <div class="col-md-6">
+                                         <input class="form-control" name="short_description"> 
+                                    </div>                                                                
+                                </div> 
+
                                  <div class="col-md-12 form-group">
                                     <div class="col-md-6"><label>Description</label></div>
                                     <div class="col-md-6">
-                                         <input class="form-control" name="room_description"> 
+                                    <textarea rows="4" cols="50" name="room_description" class="form-control" ></textarea>
                                     </div>                                                                
                                 </div> 
                                 <div class="col-md-12 form-group">

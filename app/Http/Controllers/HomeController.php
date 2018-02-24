@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Facilities;
 use App\Home;
 use App\Images;
+use App\Rooms;
 
 class HomeController extends Controller
 {
@@ -28,6 +29,23 @@ class HomeController extends Controller
         $data['home_gallery'] = Images::where('type', 'Photo')
                                     ->where('category', 'home')
                                     ->orderBy('id', 'DESC')->limit(3)->get(); 
+
+        $data['rooftop_video_banner'] = Images::where('type', 'Video')
+                                    ->where('category', 'rooftop')->first(); 
+        
+        $data['rooftop_gallery'] = Images::where('type', 'Photo')
+                                    ->where('category', 'rooftop')
+                                    ->orderBy('id', 'DESC')
+                                    ->limit(14)
+                                    ->get()
+                                    ->toArray(); 
+        
+        $data['rooftopLeftA'] = array_slice($data['rooftop_gallery'], 0, 4);
+        $data['rooftopLeftB'] = array_slice($data['rooftop_gallery'], 4, 4);
+        $data['rooftopRight'] = array_slice($data['rooftop_gallery'], 8, 6);   
+
+        $data['roomsLists'] = Rooms::get();
+
         return view('home.index', $data);
     }
 

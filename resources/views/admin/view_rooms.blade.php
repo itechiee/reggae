@@ -47,12 +47,12 @@
                                     <td>{{$room->price}}</td>
                                     <td>{{$room->short_description}}</td>
                                     <td>
-                                      {!! Html::image('/uploads/rooms/'.$room->image,'image',['class' => 'col-md-4 col-sm-2']) !!}
+                                      {!! Html::image('/uploads/rooms/'.$room->image,'image',['width' => '100', 'height' => '100']) !!}
                                     </td>
                                     <td><div>
-                                        <a href="{{ url('/admin/rooms/edit/').'/'.$room->id }}"><i class="fa fa-edit"></i>  </a> 
+                                        <a href="{{ url('/admin/rooms/edit/').'/'.$room->id }}"><i class="fa fa-edit"></i> Edit </a> 
                                         /
-                                        <a href="{{ url('/admin/rooms/delete').'/'.$room->id }}"><i class="glyphicon glyphicon-remove"></i> </a> 
+                                        <a href="{{ url('/admin/rooms/delete').'/'.$room->id }}"><i class="glyphicon glyphicon-remove"></i>Delete </a> 
                                     </div></td>
                                  </tr>
                                 @endforeach

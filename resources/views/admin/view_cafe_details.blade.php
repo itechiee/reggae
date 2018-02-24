@@ -49,7 +49,7 @@
                                     <td>{{$cafe->phone}}</td>
                                      <td>{{$cafe->description}}</td>
                                     <td>
-                                      {!! Html::image('/uploads/banner/'.$cafe->cafe_image,'image',['class' => 'col-md-4 col-sm-2']) !!}
+                                      {!! Html::image('/uploads/cafe/'.$cafe->cafe_image,'image',['width' => '100', 'height' => '100']) !!}
                                     </td>
                                     <td><div>
                                         <a href="{{ url('/admin/cafe/edit/').'/'.$cafe->id }}"><i class="fa fa-edit"></i>  </a> 

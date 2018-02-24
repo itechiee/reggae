@@ -80,7 +80,7 @@
                                 </div> 
                                 <div class="col-md-12 col-sm-12 col-xs-12 form-group">
                                     <div class="col-md-6 col-sm-6 col-xs-6">
-                                        <label>Update</label>
+                                        <label>Update Image</label>
                                     </div>
                                     <div class="col-md-6 col-sm-6 col-xs-6">
                                          <input type="file" name="file" id="file">  

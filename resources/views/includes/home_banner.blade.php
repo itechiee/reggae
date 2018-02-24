@@ -118,22 +118,23 @@
                                     <?php } ?>
                                     
                                     <?php if(isset($home_gallery[2])){ ?>
-                                    <?php } ?>
-                                    <div class="columns show-for-large header_gallery_column">
-                                       <a class="destination-gallery__thumb" data-interchange="[{{ url('/uploads/home').'/'.$home_gallery[2]->file_name }}?ext=.jpg&amp;width=400, small],[{{ url('/uploads/home').'/'.$home_gallery[2]->file_name }}?ext=.jpg&amp;width=400, medium],[{{ url('/uploads/home').'/'.$home_gallery[2]->file_name }}?ext=.jpg&amp;width=400, large]" data-open="destinationsGalleryModal" data-slide-index="3">
-                                          <div class="gallery-count">
-                                             <div class="gallery-count__overlay">
-                                                <div class="gallery-count__container">
-                                                   <div class="text-center">
-                                                      <img src="{{ url('/images/icons/icon_camera.svg') }}" alt="Camera" />
-                                                      <div>SEE ALL</div>
-                                                      <div class="js-hook--gallery-count count"></div>
-                                                   </div>
+                                        <div class="columns show-for-large header_gallery_column">
+                                            <a class="destination-gallery__thumb" data-interchange="[{{ url('/uploads/home').'/'.$home_gallery[2]->file_name }}?ext=.jpg&amp;width=400, small],[{{ url('/uploads/home').'/'.$home_gallery[2]->file_name }}?ext=.jpg&amp;width=400, medium],[{{ url('/uploads/home').'/'.$home_gallery[2]->file_name }}?ext=.jpg&amp;width=400, large]" data-open="destinationsGalleryModal" data-slide-index="3">
+                                                <div class="gallery-count">
+                                                    <div class="gallery-count__overlay">
+                                                        <div class="gallery-count__container">
+                                                        <div class="text-center">
+                                                            <img src="{{ url('/images/icons/icon_camera.svg') }}" alt="Camera" />
+                                                            <div>SEE ALL</div>
+                                                            <div class="js-hook--gallery-count count"></div>
+                                                        </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                             </div>
-                                          </div>
-                                       </a>
-                                    </div>
+                                            </a>
+                                            </div>
+                                    <?php } ?>
+                                    
 
                                  </div>
                               </div>

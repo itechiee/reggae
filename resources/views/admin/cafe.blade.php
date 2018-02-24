@@ -55,6 +55,14 @@
                                     <input name="phone" class="form-control" >
                                     </div>                                                                
                                 </div> 
+
+                                <div class="col-md-12 form-group">
+                                    <div class="col-md-6"><label>Title</label></div>
+                                    <div class="col-md-6">
+                                        <input name="title" class="form-control"  type="text"> 
+                                    </div>                                                                
+                                </div>
+
                                 <div class="col-md-12 form-group">
                                     <div class="col-md-6"><label>Description</label></div>
                                     <div class="col-md-6">

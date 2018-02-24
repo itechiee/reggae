@@ -34,7 +34,7 @@
                         <div class="col-lg-6">
 
 
-                            <form role="form" method="POST" action="{{ url('/admin/header_gallery/store') }}" enctype="multipart/form-data">
+                            <form role="form" method="POST" action="{{ url('/admin/header_gallery/store') }}" enctype="multipart/form-data" files="true">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 
                                 <div class="col-md-12 form-group">
@@ -50,14 +50,14 @@
                                 <div class="col-md-12 form-group">
                                     <div class="col-md-5"><label>Image/Video</label></div>
 				                    <div class="col-md-7">
-                                        <input type="file" name="file" id="file" class="form-control">	
+                                        {!! Form::file('homeFile', ['class' => 'form-control']) !!}
                                     </div>				                    			                    
                                 </div>
                                 
                                 <div class="col-md-12 form-group">
                                     <div class="col-md-5"><label>Thumbnail</label></div>
 				                    <div class="col-md-7">
-                                        <input type="file" name="thumbnail" id="thumbnail" class="form-control">	
+                                        {!! Form::file('thumbnail', ['class' => 'form-control']) !!}
                                     </div>				                    			                    
 			                    </div>
 

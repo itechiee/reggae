@@ -59,18 +59,16 @@
                                                             <div class="show-for-medium">
                                                                <h3>CONTACT US</h3>
                                                             </div>
-                                                            <ul class="menu vertical iconlist" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+                                                            <ul class="menu vertical iconlist">
                                                                <li>
-                                                                 <span itemprop="streetAddress">5, Jalan Tun H.S Lee</span>,
-                                                                  <span itemprop="addressLocality">Kuala Lumpur</span>,
-                                                                  <span itemprop="addressCountry">Malaysia</span>,
-                                                                  <span itemprop="postalCode">50000</span>
+                                                                   <span> {{ $location->address }} </span>
                                                                </li>
                                                                <li>
-                                                                  +60 20726887
+                                                               {{ $location->phone }}
                                                                </li>
                                                                <li>
-                                                                  <a class="uppercase" id="askus" itemprop="email" href="mailto:contactus@reggaehostelsmalaysia.com">ASK US</a>
+                                                               <!-- contactus@reggaehostelsmalaysia.com -->
+                                                                  <a class="uppercase" id="askus" itemprop="email" href="mailto:{{ $location->mail }}"> <?php echo isset($location->btn_mail_text)?$location->btn_mail_text:'ASK US'; ?></a>
                                                                </li>
                                                             </ul>
                                                          </div>
@@ -82,7 +80,7 @@
                                                 <div class="callout default show-for-medium">
                                                    <h3>Location</h3>
                                                    <div>
-                                                      sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus
+                                                      {{  $location->location_description }}
                                                    </div>
                                                 </div>
                                              </div>
@@ -109,55 +107,7 @@
                         <div class="row">
                            <div class="columns">
                               <section class="accordion-panel spaces-panel" id="cafe">
-                                 <ul class="accordion" data-accordion data-allow-all-closed="true" data-multi-expand="true">
-         
-                                    <li  class="accordion-item" data-accordion-item="" data-magellan-target="cafe">
-                                       <a href="#" class="accordion-title medium-disabled">
-                                          <h2 class="expando-line">CAFÉ</h2>
-                                       </a>
-                                       <div class="accordion-content" data-tab-content>
-                                          <section class="space-container left">
-                                             <div class="row collapse">
-                                                <div class="columns large-12 space-gallery-column">
-                                                   <figure>
-                                                      <div class="space-gallerys">
-                                                    <div class="columns cafe_lg large-7" >
-                                                                <img src="../stock/images/others/bar.jpg?ext=.jpg">
-                                                            </div>
-                                                            
-                                                            <div class="columns medium-4 large-3" >
-                                                                <aside id="opening_hours">
-                                                                   <h3>OPENING HOURS :</h3>
-                                                                   <div>
-                                                                       <span>Mon - Sunday</span> <br>
-                                                                       <span>07:00 - 23:00</span> <br><br>
-                                                                        <span><b>RSVN :</b></span> <br>
-                                                                        <span>+60 129104567</span>                                                                    
-                                                                   </div>
-                                                                </aside>
-                                                              </div>
-
-                                                              <div class="columns medium-4 large-5">
-                                                                    <aside class="callout">
-                                                                       <h3>ABOUT</h3>
-                                                                       <p>
-                                                                            sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus
-                                                                       </p>
-                                                                    </aside>
-                                                                 </div>
-
-                                                          </div>
-                                                      </div>
-                                                   </figure>
-                                                   <div class="instagram space-gallery__insta show-for-large" data-insta="" data-insta-shortlink="https://www.instagram.com/p/BVUKDXVhAl2/?taken-at=289114468204779">
-                                                   </div>
-                                                </div>
-                                             </div>
-                                          </section>
-                                       </div>
-                                    </li>
-                                    
-                                 </ul>
+                              @include('includes.cafe.cafe')
                               </section>
                            </div>
                         </div>

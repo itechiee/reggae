@@ -25,36 +25,33 @@
                       @endif
                     @endforeach
                 </div>
-              @if(count($homes) > 0)
+              @if(count($locations) > 0)
                 <div class="col-sm-12">
                     <div class="row">
                         <table class="table table-bordered" id="home_table">
                             <thead>
                                 <tr>
-                                    <th>Title</th>
-                                    <th>Subtitle</th>
+                                    <th>Address</th>
+                                    <th>Phone</th>
+                                    <th>Mail</th>
                                     <th>Description</th>
-                                    <th>Banner</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($homes as $home)
                                 <tr>
-                                    <td> {{ $home->title }} </td>
-                                    <td> {{ $home->subtitle }} </td>
-                                    <td style="width:25%;"> {{ $home->description }} </td>
+                                    <td> {{ $locations->address }} </td>
+                                    <td> {{ $locations->phone }} </td>
+                                    <td> {{ $locations->mail }} </td>
+                                    <td> {{ $locations->location_description }} </td>                                    
+                                    
                                     <td> 
-                                        {!! Html::image('/uploads/banner/'.$home->banner_image,'banner',['width' => '100px', 'height' => '100px']) !!}
-                                    </td>
-                                    <td> 
-                                    <div>
-                                        <a href="{{ url('/admin/header_content/edit').'/'.$home->id }}"><i class="fa fa-edit"></i> Edit </a> 
-                                    /
-                                        <a href="{{ url('/admin/header_content/delete').'/'.$home->id }}"><i class="glyphicon glyphicon-remove"></i> Delete </a> </td>
-                                    </div>
+                                        <div>
+                                            <a href="{{ url('/admin/location/edit').'/'.$locations->id }}"><i class="fa fa-edit"></i> Edit </a> 
+                                        /
+                                            <a href="{{ url('/admin/location/delete').'/'.$locations->id }}"><i class="glyphicon glyphicon-remove"></i> Delete </a> </td>
+                                        </div>
                                 </tr>
-                                @endforeach()
                             </tbody>
                         </table>	
                     </div>
@@ -64,41 +61,41 @@
             <div class="col-sm-12">
                 <div class="row">
                     <div class="col-lg-6">
-                        <form role="form" method="POST" action="{{ url('/admin/header_content/store') }}" enctype="multipart/form-data">
+                        <form role="form" method="POST" action="{{ url('/admin/location/store') }}" >
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             
                             <div class="col-md-12 form-group">
-                                <div class="col-md-6"><label>Banner Image</label></div>
+                                <div class="col-md-6"><label>Address</label></div>
                                 <div class="col-md-6">
-                                     <input type="file" class="form-control" name="banner_image" id="banner_image">	
+                                    <input type="text" class="form-control" name="address" id="address">		
                                 </div>				                    			                    
                             </div>
 
                             <div class="col-md-12 form-group">
-                                <div class="col-md-6"><label>Mobile Banner Image</label></div>
+                                <div class="col-md-6"><label>Phone</label></div>
                                 <div class="col-md-6">
-                                     <input type="file" class="form-control" name="mobile_banner_image" id="mobile_banner_image">	
+                                    <input type="text" class="form-control" name="phone" id="phone">		
                                 </div>				                    			                    
                             </div>
 
                             <div class="col-md-12 form-group">
-                                <div class="col-md-6"><label>Title</label></div>
+                                <div class="col-md-6"><label>Mail</label></div>
                                 <div class="col-md-6">
-                                     <input type="text" class="form-control" name="title" id="title">	
+                                    <input type="text" class="form-control" name="mail" id="mail">		
                                 </div>				                    			                    
                             </div>
 
                             <div class="col-md-12 form-group">
-                                <div class="col-md-6"><label>Sub Title</label></div>
+                                <div class="col-md-6"><label>Mail Link Text</label></div>
                                 <div class="col-md-6">
-                                     <input type="text" class="form-control" name="subtitle" id="subtitle">	
+                                    <input type="text" class="form-control" name="btn_mail_text" id="btn_mail_text">		
                                 </div>				                    			                    
                             </div>
 
                             <div class="col-md-12 form-group">
-                                <div class="col-md-6"><label>Content</label></div>
+                                <div class="col-md-6"><label>Location Description</label></div>
                                 <div class="col-md-6">
-                                    <textarea rows="4" class="form-control" cols="50" name="description"></textarea>
+                                    <textarea rows="4" class="form-control" cols="50" name="location_description"></textarea>
                                 </div>				                    			                    
                             </div>
                             

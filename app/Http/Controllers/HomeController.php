@@ -10,7 +10,8 @@ use App\Facilities;
 use App\Home;
 use App\Images;
 use App\Rooms;
-
+use App\Cafe;
+use App\Location;
 class HomeController extends Controller
 {
     /**
@@ -45,6 +46,8 @@ class HomeController extends Controller
         $data['rooftopRight'] = array_slice($data['rooftop_gallery'], 8, 6);   
 
         $data['roomsLists'] = Rooms::get();
+        $data['cafe'] = Cafe::orderBy('id', 'desc')->first();
+        $data['location'] = Location::orderBy('id', 'desc')->first();
 
         return view('home.index', $data);
     }

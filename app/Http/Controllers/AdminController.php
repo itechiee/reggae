@@ -21,6 +21,7 @@ use App\Images;
 use App\Contents;
 use App\Home;
 use App\Cafe;
+use App\Location;
 
 class AdminController extends Controller
 {
@@ -212,6 +213,7 @@ class AdminController extends Controller
             'workdays' => 'required|max:50',
             'work_time' => 'required|numeric',
             'work_time' => 'required',
+            'title' =>'required',
             'description' =>'required',
             'file'=>'required',
         ]);
@@ -225,7 +227,7 @@ class AdminController extends Controller
         $filename = null;
         if (request()->hasFile('file')) {
             $file = Input::file('file');
-            $destinationPath = public_path(). '/uploads/banner/';
+            $destinationPath = public_path(). '/uploads/cafe/';
             $filename = time() . '.' . $file->getClientOriginalExtension();
             $file->move($destinationPath, $filename);   
         }
@@ -234,6 +236,7 @@ class AdminController extends Controller
         $cafe->work_days = $input['workdays'];
         $cafe->work_time = $input['work_time'];
         $cafe->phone = $input['phone'];
+        $cafe->title = $input['title'];
         $cafe->description = $input['description'];
         $cafe->cafe_image = $filename;
 
@@ -316,24 +319,41 @@ class AdminController extends Controller
         $data['page_heading'] = 'RoofTop';
         $input = $request->all();
 
-        if($input['rooftop_type'] == 'Photo'){
-            $validator = Validator::make($request->all(), [
-                'rooftop_type' => 'required',
-                'file' => 'required',
-            ]);
 
-        }else{
-            $validator = Validator::make($request->all(), [
-                'rooftop_type' => 'required',
-                'file' => 'required|max:50000',
-            ]);
+        $rules['rooftop_type'] = 'required';
+        $rules['file'] = 'required|mimes:jpeg,jpg,png|max:2000';
+        $message['file.required'] = 'Please upload image';
+        $message['file.mimes'] = 'Image must be a file of type: jpeg, jpg, png.';
+        if(isset($input) && $input['rooftop_type'] == "Video"){
+            $rules['file'] = 'required|mimes:mp4,mov,m4v|max:20000';            
+            $rules['thumbnail'] = 'mimes:jpeg,jpg,png|max:2000';
+            $message['file.required'] = 'Please upload video';
+            $message['file.mimes'] = 'Video must be a file of type: mp4, mov, m4v.';
+            $message['file.max'] = 'Video size maximum limit is 20mb.';
+            $message['thumbnail.mimes'] = 'Thumbnail must be a file of type: jpeg, jpg, png.';
+            $message['thumbnail.max'] = 'Thumbnail size maximum limit is 2mb.';
         }
+        $this->validate($request, $rules, $message);
+        $error = $request->file('file')->getErrorMessage();
 
-        if ($validator->fails()) {
-            return redirect('admin/rooftop')
-                        ->withErrors($validator)
-                        ->withInput();
-        }
+        // if($input['rooftop_type'] == 'Photo'){
+        //     $validator = Validator::make($request->all(), [
+        //         'rooftop_type' => 'required',
+        //         'file' => 'required',
+        //     ]);
+
+        // }else{
+        //     $validator = Validator::make($request->all(), [
+        //         'rooftop_type' => 'required',
+        //         'file' => 'required|max:50000',
+        //     ]);
+        // }
+
+        // if ($validator->fails()) {
+        //     return redirect('admin/rooftop')
+        //                 ->withErrors($validator)
+        //                 ->withInput();
+        // }
 
         $valid = true;
         if($input['rooftop_type'] == 'Photo'){
@@ -543,16 +563,6 @@ class AdminController extends Controller
         return redirect('admin/rooms/view_room_details');
     }
     /**
-     * Edit Rooftop.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    // public function editRooftop($id)
-    // {
-    //     //
-    // }
-    /**
      * Update Rooftop.
      *
      * @param  Request  $request
@@ -611,6 +621,15 @@ class AdminController extends Controller
     {
         $rooftop = Images::find($Id);
         if(count($rooftop) > 0) {
+            $destinationPath = public_path(). '/uploads/rooftop/';
+            $oldFile = $destinationPath.$rooftop->file_name;
+            $oldThumbnailFile = $destinationPath.$rooftop->thumbnail;
+            if(file_exists($oldFile)){
+                @unlink($oldFile);
+            }
+            if(file_exists($oldThumbnailFile)){
+                @unlink($oldThumbnailFile);
+            }
             $rooftop->delete();
             \Session::flash('alert-info', 'Rooftop image/video deleted successfully!');            
         }
@@ -689,18 +708,26 @@ class AdminController extends Controller
         
         $input = $request->all();
         $cafe = cafe::find($input['id']);
+        $filename = $cafe->cafe_image;
+        $filePath = url('/uploads/cafe').'/'.$cafe->cafe_image;
+        $extension =  pathinfo($filePath, PATHINFO_EXTENSION);
 
-            if ($request->file('file')) {
-                $file = Input::file('file');
-                $destinationPath = public_path(). '/uploads/banner/';
-                $filename = time() . '.' . $file->getClientOriginalExtension();
-                $extension = $file->getClientOriginalExtension();
-                $file->move($destinationPath, $filename);
+        if ($request->file('file')) {
+            $file = Input::file('file');
+            $destinationPath = public_path(). '/uploads/cafe/';
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $extension = $file->getClientOriginalExtension();
+            $file->move($destinationPath, $filename);
+            $oldFile = $destinationPath.$cafe->cafe_image;
+            if(file_exists($oldFile)){
+                @unlink($oldFile);
             }
+        }
 
         $cafe->work_days  = $input['workdays'];
         $cafe->work_time = $input['work_time'];
         $cafe->phone = $input['phone'];
+        $cafe->title =  $input['title'];
         $cafe->description = $input['description'];
         $cafe->type = $extension;
         $cafe->cafe_image = $filename;
@@ -722,6 +749,11 @@ class AdminController extends Controller
     {
         $cafe = cafe::find($Id);
         if(count($cafe) > 0) {
+            $destinationPath = public_path(). '/uploads/cafe/';
+            $oldFile = $destinationPath.$cafe->cafe_image;
+            if(file_exists($oldFile)){
+                @unlink($oldFile);
+            }
             $cafe->delete();
             \Session::flash('alert-info', 'Cafe deleted successfully!');            
         }
@@ -861,25 +893,25 @@ class AdminController extends Controller
     {
         $data['page_heading'] = 'Home Gallery';
         $input = $request->all();
+        $rules['home_file_type'] = 'required';
+        $rules['homeFile'] = 'required|mimes:jpeg,jpg,png|max:2000';
+        $message['homeFile.required'] = 'Please upload image';
+        $message['homeFile.mimes'] = 'Image must be a file of type: jpeg, jpg, png.';
+        if(isset($input) && $input['home_file_type'] == "Video"){
+            $rules['homeFile'] = 'required|mimes:mp4,mov,m4v|max:20000';            
+            $rules['thumbnail'] = 'mimes:jpeg,jpg,png|max:2000';
+            $message['homeFile.required'] = 'Please upload video';
+            $message['homeFile.mimes'] = 'Video must be a file of type: mp4, mov, m4v.';
+            $message['homeFile.max'] = 'Video size maximum limit is 20mb.';
+            $message['thumbnail.mimes'] = 'Thumbnail must be a file of type: jpeg, jpg, png.';
+            $message['thumbnail.max'] = 'Thumbnail size maximum limit is 2mb.';
+        }
+        $this->validate($request, $rules, $message);
         
-        // $rules['home_file_type'] = 'required|mimes:mp4,mov,m4v|max:2000';
-        // $rules['file'] = 'required';
-        // if(isset($input) && $input['home_file_type'] == "Photo"){
-        //     $rules['home_file_type'] = 'mimes:jpeg,jpg,png|max:2000';
-        // }
-        // $validator =Validator::make(Input::all(), $rules);
-
-        // if ($validator->fails()) {
-        //     return redirect('admin/header_gallery')
-        //                 ->withErrors($validator)
-        //                 ->withInput();
-        // }
-
-       
         $thumbnailFileName = $fileName = null;
 
-        if ($request->hasFile('file')) {
-            $file = Input::file('file');
+        if ($request->hasFile('homeFile')) {
+            $file = Input::file('homeFile');
             $destinationPath = public_path(). '/uploads/home/';
             $fileName = rand().time() . '.' . $file->getClientOriginalExtension();
             $file->move($destinationPath, $fileName);
@@ -899,7 +931,7 @@ class AdminController extends Controller
          $picture->description = $input['description'];
          $picture->thumbnail = $thumbnailFileName;
 
-        if($picture->save()){
+         if($picture->save()){
             $request->session()->flash('alert-success', 'Gallery added successfully!');
             return redirect('admin/header_gallery');
         }
@@ -915,6 +947,18 @@ class AdminController extends Controller
 
     public function updateHeaderGallery(Request $request)
     {
+        $rules['home_file_type'] = 'required';
+        $rules['gallery_image'] = 'mimes:jpeg,jpg,png|max:2000';
+        $message['gallery_image.mimes'] = 'Image must be a file of type: jpeg, jpg, png.';
+        if(isset($input) && $input['home_file_type'] == "Video"){
+            $rules['gallery_image'] = 'mimes:mp4,mov,m4v|max:20000';            
+            $rules['thumbnail'] = 'mimes:jpeg,jpg,png|max:2000';
+            $message['gallery_image.mimes'] = 'Video must be a file of type: mp4, mov, m4v.';
+            $message['gallery_image.max'] = 'Video size maximum limit is 20mb.';
+            $message['thumbnail.mimes'] = 'Thumbnail must be a file of type: jpeg, jpg, png.';
+            $message['thumbnail.max'] = 'Thumbnail size maximum limit is 2mb.';
+        }
+
         $images = Images::find($request->id);
         $images->type = $request->home_file_type;
  
@@ -957,12 +1001,97 @@ class AdminController extends Controller
         if(count($images) > 0) {            
             $destinationPath = public_path(). '/uploads/home/';
             $oldFile = $destinationPath.$images->file_name;
+            $oldThumbnailFile = $destinationPath.$images->thumbnail;            
             if(file_exists($oldFile)){
                 @unlink($oldFile);
+            }
+            if(file_exists($oldThumbnailFile)){
+                @unlink($oldThumbnailFile);
             }
             $images->delete();
             \Session::flash('alert-info', 'Home gallery deleted successfully!');            
         }
         return redirect('admin/header_gallery');
     }
+
+    public function createLocation()
+    {
+        $data['page_heading'] = 'Location';
+        $data['locations'] = Location::first();
+        return view('admin.location', $data);
+    }
+
+    
+    public function storeLocation(Request $request)
+    {
+        $data['page_heading'] = 'Location';
+        $this->validate($request, [
+            'address' => 'required',
+            'phone' => 'required',
+            'mail' => 'required',
+            'location_description' => 'required'
+        ]);
+        $input = $request->all();
+        $btnmailText = $input['btn_mail_text'];
+        if(is_null($input['btn_mail_text'])) {
+            $btnmailText = "ASK US";
+        }
+        $input = $request->all();   
+         $location = new Location();
+         $location->address =  $input['address'];
+         $location->phone = $input['phone'];
+         $location->mail = $input['mail'];
+         $location->btn_mail_text = $btnmailText;
+         $location->location_description = $input['location_description'];
+
+        if($location->save()){
+            $request->session()->flash('alert-success', 'Location added successfully!');
+            return redirect('admin/location/add');
+        }        
+    }
+
+    public function editLocation($locaionId)
+    {
+        $data['page_heading'] = 'Header';
+        $data['location'] = Location::where('id', $locaionId)->first();
+        return view('admin.edit_location', $data);
+    }
+
+    public function updateLocation(Request $request)
+    {
+        $data['page_heading'] = 'Location';
+        $this->validate($request, [
+            'address' => 'required',
+            'phone' => 'required',
+            'mail' => 'required',
+            'location_description' => 'required'
+        ]);
+        $input = $request->all();        
+        $location = Location::find($request->id);
+        $btnmailText = $input['btn_mail_text'];
+        if(is_null($input['btn_mail_text'])) {
+            $btnmailText = "ASK US";
+        }
+        $location->address =  $input['address'];
+        $location->phone = $input['phone'];
+        $location->mail = $input['mail'];
+        $location->btn_mail_text = $btnmailText;
+        $location->location_description = $input['location_description'];
+
+        if($location->save()){
+            $request->session()->flash('alert-success', 'Location updated successfully!');            
+        }
+        return redirect('admin/location/add');
+    }
+    
+    public function deleteLocation($locationId)
+    {
+        $location = Location::find($locationId);
+        if(count($location) > 0) {
+            $location->delete();
+            \Session::flash('alert-info', 'Location deleted successfully!');            
+        }
+        return redirect('admin/location/add');
+    }
+    
 }

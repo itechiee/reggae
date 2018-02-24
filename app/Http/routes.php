@@ -53,9 +53,6 @@ Route::get('admin/contents/edit/{id}', 'AdminController@editContent');
 Route::post('admin/contents/update', 'AdminController@updateContent');
 Route::get('admin/contents/delete/{id}', 'AdminController@deleteContent');
 
-//Route::get('admin/rooftop', 'AdminController@createRooftop');
-//Route::post('admin/Rooftop/store', 'AdminController@storeRooftop');
-
 Route::get('admin/header_content', 'AdminController@headerBanners');
 Route::post('admin/header_content/store', 'AdminController@storeHeaderBanners');
 Route::get('admin/header_content/edit/{homeId}', 'AdminController@editHeaderBanners');
@@ -71,8 +68,11 @@ Route::get('admin/header_gallery/delete/{homeId}', 'AdminController@deleteHeader
 
 
 Route::get('admin/contents/view_contents_details', 'AdminController@viewContents');
-//Route::get('admin/rooftop', 'AdminController@createRooftop');
-//Route::post('admin/Rooftop/store', 'AdminController@storeRooftop');
 
+Route::get('admin/location/add', 'AdminController@createLocation');
+Route::post('admin/location/store', 'AdminController@storeLocation');
+Route::get('admin/location/edit/{locaionId}', 'AdminController@editLocation');
+Route::post('admin/location/update', 'AdminController@updateLocation');
+Route::get('admin/location/delete/{locaionId}', 'AdminController@deleteLocation');
 
 Route::get('/', 'HomeController@index');

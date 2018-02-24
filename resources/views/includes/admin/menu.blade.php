@@ -46,13 +46,13 @@
                             </div>
                             <!-- /input-group -->
                         </li>
-                        <li {{ (Request::is('/') ? 'class="active"' : '') }}>
+                        <li {{ (Request::is('/') ? 'class=active' : '') }}>
                             <a href="{{ url ('admin/dashboard') }}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
 
 
                         <li>
-                            <a href="#"><i class="fa fa-wrench fa-fw"></i>Home<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-home fa-fw"></i>Home<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li {{ (Request::is('*header_content') ? 'class=active' : '') }}>
                                     <a href="{{ url ('admin/header_content') }}">Home Content</a>
@@ -64,21 +64,26 @@
 
                         </li>
 
-                        <li {{ (Request::is('*facilities') ? 'class="active"' : '') }}>
-                            <a href="{{ url ('admin/facilities') }}"><i class="fa fa-bar-chart-o fa-fw"></i> Facilities</a>
+                        <li {{ (Request::is('*location') ? 'class=active' : '') }}>
+                            <a href="{{ url ('admin/location/add') }}"><i class="fa fa-map-marker fa-fw"></i> Location</a>
                             <!-- /.nav-second-level -->
                         </li>
-                        <li {{ (Request::is('*rooms') ? 'class="active"' : '') }}>
-                            <a href="{{ url ('admin/rooms') }}"><i class="fa fa-table fa-fw"></i> Rooms</a>
+
+                        <li {{ (Request::is('*facilities') ? 'class=active' : '') }}>
+                            <a href="{{ url ('admin/facilities') }}"><i class="fa fa-cutlery fa-fw"></i> Facilities</a>
+                            <!-- /.nav-second-level -->
                         </li>
-                        <li {{ (Request::is('*rooftop') ? 'class="active"' : '') }}>
-                            <a href="{{ url ('admin/rooftop') }}"><i class="fa fa-edit fa-fw"></i> Roof Top</a>
+                        <li {{ (Request::is('*rooms') ? 'class=active' : '') }}>
+                            <a href="{{ url ('admin/rooms') }}"><i class="fa fa-columns fa-fw"></i> Rooms</a>
                         </li>
-                         <li {{ (Request::is('*cafe') ? 'class="active"' : '') }}>
-                            <a href="{{ url ('admin/cafe') }}"><i class="fa fa-edit fa-fw"></i> Cafe</a>
+                        <li {{ (Request::is('*rooftop') ? 'class=active' : '') }}>
+                            <a href="{{ url ('admin/rooftop') }}"><i class="fa fa-flash fa-fw"></i> Roof Top</a>
                         </li>
                          <li {{ (Request::is('*aboutUs') ? 'class="active"' : '') }}>
                             <a href="{{ url ('admin/contents') }}"><i class="fa fa-edit fa-fw"></i> About Us</a>
+                        </li>
+                         <li {{ (Request::is('*rooftop') ? 'class=active' : '') }}>
+                            <a href="{{ url ('admin/aboutus') }}"><i class="fa fa-align-justify fa-fw"></i> About Us</a>
                         </li>
                         
                     </ul>

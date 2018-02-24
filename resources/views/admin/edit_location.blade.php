@@ -34,60 +34,41 @@
                 <div class="col-sm-12">
                     <div class="row">
                         <div class="col-lg-6">
-                        {!! Form::open(['url' => 'admin/cafe/update', 'method' => 'post', 'enctype' => 'multipart/form-data']) !!}
-                        {!! Form::hidden('id', $cafe->id, ['class' => 'form-control', 'id' => 'cafeId']) !!}
+                        {!! Form::open(['url' => 'admin/location/update', 'method' => 'post']) !!}
+                        {!! Form::hidden('id', $location->id, ['class' => 'form-control', 'id' => 'locationId']) !!}
 
                                 <div class="col-md-12 col-sm-12 col-xs-12 form-group">
-                                    <div class="col-md-6 col-sm-6 col-xs-6">
-                                        <label>Current Image</label>
-                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-6"><label>Address</label></div>
 				                    <div class="col-md-6 col-sm-6 col-xs-6">
-                                    {!! Html::image('/uploads/banner/'.$cafe->cafe_image,'banner',['class' => 'col-md-6 col-sm-2', 'width' => '100']) !!}
-                                    </div>				                    			                    
-                                </div>  
-                                
-                                <div class="col-md-12 col-sm-12 col-xs-12 form-group">
-                                    <div class="col-md-6 col-sm-6 col-xs-6">
-                                        <label>Update Image</label>
-                                    </div>
-				                    <div class="col-md-6 col-sm-6 col-xs-6">
-                                         <input type="file" name="file" id="file">	
-                                    </div>				                    			                    
-			                    </div>
-
-
-                                <div class="col-md-12 col-sm-12 col-xs-12 form-group">
-                                    <div class="col-md-6 col-sm-6 col-xs-6"><label>Work Days</label></div>
-				                    <div class="col-md-6 col-sm-6 col-xs-6">
-                                        {!! Form::text('workdays', $cafe->work_days, ['class' => 'form-control', 'id' => 'workdays']) !!}
-                                    </div>				                    			                    
-			                    </div>
-
-                                <div class="col-md-12 col-sm-12 col-xs-12 form-group">
-                                    <div class="col-md-6 col-sm-6 col-xs-6"><label>Work Time</label></div>
-				                    <div class="col-md-6 col-sm-6 col-xs-6">
-                                    {!! Form::text('work_time', $cafe->work_time, ['class' => 'form-control', 'id' => 'work_time']) !!}	
+                                        {!! Form::text('address', $location->address, ['class' => 'form-control', 'id' => 'address']) !!}
                                     </div>				                    			                    
 			                    </div>
 
                                 <div class="col-md-12 col-sm-12 col-xs-12 form-group">
                                     <div class="col-md-6 col-sm-6 col-xs-6"><label>Phone</label></div>
 				                    <div class="col-md-6 col-sm-6 col-xs-6">
-                                    {!! Form::text('phone', $cafe->phone, ['class' => 'form-control', 'id' => 'phone']) !!}	
+                                    {!! Form::text('phone', $location->phone, ['class' => 'form-control', 'id' => 'phone']) !!}	
                                     </div>				                    			                    
 			                    </div>
 
                                 <div class="col-md-12 col-sm-12 col-xs-12 form-group">
-                                    <div class="col-md-6 col-sm-6 col-xs-6"><label>Title</label></div>
+                                    <div class="col-md-6 col-sm-6 col-xs-6"><label>Mail</label></div>
 				                    <div class="col-md-6 col-sm-6 col-xs-6">
-                                    {!! Form::text('title', $cafe->title, ['class' => 'form-control', 'id' => 'title']) !!}	
+                                    {!! Form::text('mail', $location->mail, ['class' => 'form-control', 'id' => 'mail']) !!}	
+                                    </div>				                    			                    
+			                    </div>
+
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group">
+                                    <div class="col-md-6 col-sm-6 col-xs-6"><label>Mail Link Text</label></div>
+				                    <div class="col-md-6 col-sm-6 col-xs-6">
+                                    {!! Form::text('btn_mail_text', $location->btn_mail_text, ['class' => 'form-control', 'id' => 'btn_mail_text']) !!}	
                                     </div>				                    			                    
 			                    </div>
 
                                  <div class="col-md-12 col-sm-12 col-xs-12 form-group">
-                                    <div class="col-md-6 col-sm-6 col-xs-6"><label>Description</label></div>
+                                    <div class="col-md-6 col-sm-6 col-xs-6"><label>Location Description</label></div>
 				                    <div class="col-md-6 col-sm-6 col-xs-6">
-                                        {!! Form::textarea('description', $cafe->description, ['class' => 'form-control', 'id' => 'description', 'rows' => 4, 'cols' =>50]) !!}	
+                                        {!! Form::textarea('location_description', $location->location_description, ['class' => 'form-control', 'id' => 'location_description', 'rows' => 4, 'cols' =>50]) !!}	
                                     </div>				                    			                    
 			                    </div>
 

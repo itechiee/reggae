@@ -9,6 +9,6 @@ class Home extends Model
 {
 
     protected $table = 'homes';
-    protected $fillable = ['title', 'subtitle','description','banner_image','mobile_banner_image', 'created_at', 'updated_at'];
+    protected $fillable = ['title', 'subtitle','description','banner_image','mobile_banner_image','thumbnail', 'created_at', 'updated_at'];
 
 }

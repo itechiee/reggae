@@ -58,6 +58,9 @@ Route::get('admin/header_content/delete/{homeId}', 'AdminController@deleteHeader
 Route::get('admin/header_gallery', 'AdminController@headerGallery');
 
 Route::post('admin/header_gallery/store', 'AdminController@storeHomeGallery');
+Route::get('admin/header_gallery/edit/{imageId}', 'AdminController@editHeaderGallery');
+Route::post('/admin/header_gallery/update', 'AdminController@updateHeaderGallery');
+Route::get('admin/header_gallery/delete/{homeId}', 'AdminController@deleteHeaderGallery');
 
 
 Route::get('admin/contents/view_contents_details', 'AdminController@viewContents');

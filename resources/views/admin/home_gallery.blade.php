@@ -41,8 +41,8 @@
                                     <div class="col-md-6"><label>Type</label></div>
 				                    <div class="col-md-6">
                                         <select class="form-control" name="home_file_type">
-                                            <option value="Video">Video</option>
                                             <option value="Photo">Photo</option>
+                                            <option value="Video">Video</option>                                            
                                         </select>
                                     </div>				                    			                    
 			                    </div>
@@ -67,31 +67,33 @@
                 </div>             
 
 <hr class="divider"></hr>
-@if(count($homes) > 0)
+@if(count($images) > 0)
     <div class="col-sm-12">
         <div class="row">
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th>Title</th>
-                        <th>Subtitle</th>
-                        <th>Description</th>
-                        <th>Banner</th>
+                        <th>Type</th>
+                        <th>Image</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($homes as $home)
+                    @foreach($images as $image)
                     <tr>
-                        <td> {{ $home->title }} </td>
-                        <td> {{ $home->subtitle }} </td>
-                        <td> {{ $home->description }} </td>
-                        <td> {{ $home->banner_image }} </td>
+                        <td> {{ $image->type }} </td>
+                        <td> 
+                        @if($image->type == 'Video')
+                            {!! Html::image('/images/others/video.jpg','banner',['width' => '100', 'height' => '50']) !!}
+                        @else
+                        {!! Html::image('/uploads/home/'.$image->file_name,'banner',['width' => '100px', 'height' => '50']) !!}
+                        @endif
+                        </td>
                         <td> 
                         <div>
-                            <a href="{{ url('/admin/header_content/edit').'/'.$home->id }}"><i class="fa fa-edit"></i> Edit </a> 
+                            <a href="{{ url('/admin/header_gallery/edit').'/'.$image->id }}"><i class="fa fa-edit"></i> Edit </a> 
                         /
-                            <a href="{{ url('/admin/header_content/delete').'/'.$home->id }}"><i class="glyphicon glyphicon-remove"></i> Delete </a> </td>
+                            <a href="{{ url('/admin/header_gallery/delete').'/'.$image->id }}"><i class="glyphicon glyphicon-remove"></i> Delete </a> </td>
                         </div>
                     </tr>
                     @endforeach()

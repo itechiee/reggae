@@ -29,10 +29,9 @@
                                                 LOCATION<span></span></h2>
                                         </a>
                                         <div class="accordion-content" data-tab-content>
-                                            <div data-google-map="" data-google-map-zoom="14" data-google-map-lat="59.3358" data-google-map-long="18.0510">
-                                                <div class="google-map" style="background-image: url(../stock/images/others/map2.png);">
-                                                 </div>
-                                               </div>
+                                            <div id="googleMap" class="columns medium-12 large-12">
+                                                <div id="map"></div>
+                                            </div>
                                         </div>
                                     </li>
                                 </ul>
@@ -267,4 +266,29 @@
          </div>
     
       <!-- </form> -->      
+
+      <script>
+      function initMap() {
+        var uluru = {lat: 3.1481539, lng: 101.69712589999995};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 18,
+          center: uluru
+        });
+        var marker = new google.maps.Marker({
+          position: uluru,
+          map: map
+        });
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIWV-c2NOmAb8teF2acpPxAfSpijREbOE&callback=initMap">
+    </script>
+
+<style>
+ #map {
+   width: 100%;
+   height: 400px;
+   background-color: grey;
+ }
+</style>
 @endsection
